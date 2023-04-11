@@ -8,7 +8,8 @@ $(document).ready(function() {
 
 const direction = {
   LEFT: 0,
-  RIGHT: 1
+  RIGHT: 1,
+  MIDDLE: 2
 }
 
 var frames = {
@@ -26,6 +27,9 @@ var frames = {
         }
         else if (command == direction.RIGHT) {
           console.log("RIGHT");
+        }
+        else if (command == direction.MIDDLE) {
+          console.log("MIDDLE");
         }
       }
     }
@@ -45,27 +49,17 @@ var frames = {
     // if (pelvis_z < 100) {
     //   return command;
     // }
-    // console.log(pelvis_x);
 
-    if (pelvis_x < -200) {
+    if (pelvis_x < -400) {
       command = direction.LEFT; // LEFT
     }
     else if (pelvis_x > 200) {
       command = direction.RIGHT; // RIGHT
     }
-//     if (left_wrist_x < 200 && left_wrist_x > -200) {
-//       if (left_wrist_y > 500) {
-//         command = 73; // UP
-//       } else if (left_wrist_y < 100) {
-//         command = 75; // DOWN
-//       }
-//     } else if (left_wrist_y < 500 && left_wrist_y > 100) {
-//       if (left_wrist_x > 200) {
-//         command = 76; // RIGHT
-//       } else if (left_wrist_x < -200) {
-//         command = 74; // LEFT
-//       }
-//     }
+    else if (pelvis_x > -400 && pelvis_x < 200) {
+      command = direction.MIDDLE; // MIDDLE
+    }
+    
     return command;
   }
 };
