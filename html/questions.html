@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html> 
-<head> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="p5.js"></script>
     <title> What's AKW Listening To? </title>
  
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
-<body> 
-<h1> Question # </h1>
-
-<canvas id="myCanvas"></canvas>
-
-<button> <a> Button </a> </button>
+<body>
+    <div class="container">
+        <div id="titlecontainer">
+          <h1 style="text-align:center">Quiz ##</h1>
+        </div>
+        <div id="answer-container"></div>
+    </div>
+    
+<script src="script.js"></script>
 
 <script type="text/javascript">
     setTimeout(function() {
         window.location.href = "error.html";
-    }, 10000);
+    }, 20000);
 </script>
 
 
 </body>
 </html>
+
