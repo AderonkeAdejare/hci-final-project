@@ -16,32 +16,55 @@ def QuestionNum():
 
 
 ## store users' selection in sql database
-class player(db.model):
+class Player(db.model):
     id = db.Column(db.Integer, primary_key=True)
+    selections = db.relationship('UserSelection', backref='user', lazy=True)
+
 
 class Answer(db.Model): 
     id = db.Column(db.Integer, primary_key=True) 
-    selected_rect = db.Column(db.Integer)
+    questionNum = db.Column(db.Integer)
+
+class PlayerSelection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    playerID = db.Column(db.Integer, db.ForeignKey('player.id'), nullable=False)
+    questionID = db.Column(db.Integer, db.ForeignKey('answer.id'), nullable=False)
+    selectedRect = db.Column(db.Integer)
 
 
 @app.route('/api/insertgetInput', methods=["GET", "POST"]) 
 def insertgetInput():  
     if request.method =="POST":
         data = request.json
-        userId = data.get("userId")
-        selection = Answer(selected_rect = data["selectedRect"])
-        db.session.add(selection)
+        player_id= data.get("playerId")
+        selections = data.get("selections")
+
+        player=Player.query.get(player_id)
+        if not player:
+            player = Player(id=player_id)
+            db.session.add(player)
+            db.session.commit()
+        
+        for selection in selections:
+            question_id=selection.get("questionID")
+            selected_rect = selection.get("selectedRect")
+
+            player_selection = PlayerSelection(player_id=player_id, question_id=question_id, selected_rect=selected_rect)
+            db.session.add(player_selection)
         db.session.commit()
-        return {'sucess': True}
-    else: 
-        answers= Answer.query.all()
-        result = None
-        count = len(answers)
-        if answers[-1].selected_react == 1:
-            result = "pop"
-        else:
-            result = "rock"
-        return render_template("results.html", result=result, genre=result, count=count)
+        return {'success': True}
+
+
+@app.routte('/results')
+def show_results():
+    latest_player = Player.query.order_by(Player.id.desc()).first()
+    latest_selection = latest_player.selections[-1].selected_rect
+    if latest_selection == 1:
+        result = "pop"
+    else:
+        result = "rock"
+    count = PlayerSelection.query.filter_by(selected_rect=latest_selection).count()
+    return render_template('results.html', genre=result, count=count)
 
 
 if __name__ == '__main__':
