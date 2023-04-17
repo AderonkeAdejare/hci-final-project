@@ -1,5 +1,10 @@
+// https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
+//https://www.youtube.com/watch?v=exRAM1ZWm_s
+
 let selectedRect = null;
 let hoverTime = 0;
+let questions = ["What's your favorite song?", "What's your favorite color?", "What's your favorite food?", "What's your favorite movie?", "What's your favorite hobby?"];
+let count = 0 
 
 
 
@@ -33,10 +38,13 @@ function draw(){
   rect((windowWidth/8)*5, windowHeight/2, 300, 100);
 
   //Question come here 
-  fill(0);
-  textSize(40);
-  textAlign(CENTER, CENTER);
-  text("What's your favorite song?", windowWidth/2, windowHeight/4);
+  for (let i = 0; i < questions.length; i++){
+    fill(0);
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    text(question[i], windowWidth/2, windowHeight/4);
+  }
+
 
   
   // Add text to the first rectangle
@@ -55,10 +63,10 @@ function draw(){
   if (selectedRect !== null) {
         hoverTime++;
         if (hoverTime >= 500 && selectedRect==1) {
-        redirectToPage1();
+        redirectToPage(1);
         } 
         else if (hoverTime >= 500 && selectedRect==2) {
-        redirectToPage2();
+        redirectToPage(2);
         }
     } else {
     hoverTime = 0;
@@ -82,13 +90,25 @@ function selection() {
 }
 
 
-function redirectToPage1() {
-  window.location.href = "results.html";
+function redirectToPage(selectedRect) {
+  fetch('/api/api/insergetInput', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({selectedRect})
+  })
+  .then(response => {
+    if (response.ok) {
+      window.location.href = "results.html";
+    } else {
+      window.location.href = "errors.html";
+    }
+  });
 }
 
-function redirectToPage2() {
-    window.location.href = "results2.html";
-}
+
+
 
 
 
