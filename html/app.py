@@ -8,11 +8,19 @@ db = SQLAlchemy(app)
 
 ##questions.html, the question head with numbers appear
 ## Maybe Ronke figure out how to change ## number here
-@app.route('/')
+@app.route('/quesitons')
 def QuestionNum():
     head_embed='Question #'
     # look inside `templates` and serve `index.html`
-    return render_template('questions.html', embed=head_embed)
+    return render_template('questions.html', head_embed=head_embed)
+
+@app.route('/quesitons')
+def QuestionText():
+    text_embed='TEXT'
+    # look inside `templates` and serve `index.html`
+    return render_template('questions.html', text_embed=text_embed)
+
+
 
 
 ## store users' selection in sql database

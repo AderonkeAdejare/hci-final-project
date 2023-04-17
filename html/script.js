@@ -9,7 +9,7 @@ let count = 0
 
 
 function setup() {
-  let answercanvas=createCanvas(windowWidth, windowHeight);
+  let answercanvas=createCanvas(windowWidth, windowHeight/2);
   answercanvas.parent("answer-container");
   
 }
@@ -37,12 +37,6 @@ function draw(){
   }
   rect((windowWidth/8)*5, windowHeight/2, 300, 100);
 
-  //Question come here 
-  for (let i = 0; i < questions.length; i++){
-    fill(0);
-    textSize(40);
-    textAlign(CENTER, CENTER);
-    text(question[i], windowWidth/2, windowHeight/4);
   }
 
 
@@ -71,7 +65,7 @@ function draw(){
     } else {
     hoverTime = 0;
   }
-}
+
 
 function mouseMoved() {
   selection();
@@ -106,6 +100,16 @@ function redirectToPage(selectedRect) {
     }
   });
 }
+
+
+// Probalby copy cesar's codes //timer 
+// var timeleft = 10;
+// var downloadTimer = setInterval(function(){
+//   if(timeleft <= 0){
+//     clearInterval(downloadTimer)
+//   }
+//   timeleft -= 1;
+// }, 1000);
 
 
 
