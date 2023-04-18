@@ -78,13 +78,13 @@ var frames = {
     //   return command;
     // }
 
-    if (pelvis_x < -400) {
+    if (pelvis_x < -600) {
       command = direction.LEFT; // LEFT
     }
     else if (pelvis_x > 200) {
       command = direction.RIGHT; // RIGHT
     }
-    else if (pelvis_x > -400 && pelvis_x < 200) {
+    else if (pelvis_x > -600 && pelvis_x < 200) {
       command = direction.MIDDLE; // MIDDLE
     }
     
