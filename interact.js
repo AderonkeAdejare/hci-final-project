@@ -12,6 +12,12 @@ const direction = {
   MIDDLE: 2
 }
 
+var counter = -1;
+// var timeCounter = [];
+const locations = [];
+var startTime = null;
+var timeElapsed = 0;
+
 var frames = {
   socket: null,
 
@@ -22,17 +28,39 @@ var frames = {
       var command = frames.get_left_right_command(JSON.parse(event.data));
       
       if (command !== null) {
+        var timestamp = frames.get_timestamp(JSON.parse(event.data));
+        counter += 1;
         if (command == direction.LEFT) {
           console.log("LEFT");
+          locations.push("LEFT");
         }
         else if (command == direction.RIGHT) {
           console.log("RIGHT");
+          locations.push("RIGHT");
         }
         else if (command == direction.MIDDLE) {
           console.log("MIDDLE");
+          locations.push("MIDDLE");
         }
+        
+      }
+      if (counter != 0) {
+        timeElapsed = timestamp - startTime;
+        console.log(timeElapsed/650);
+        if (locations[counter] != locations[counter-1]) {
+          // new location
+          startTime = timestamp;
+        }
+        
+      }
+      else if (counter == 0) {
+        startTime = timestamp;
       }
     }
+  },
+
+  get_timestamp: function(frame) {
+    return frame.ts;
   },
 
   get_left_right_command: function (frame) {
