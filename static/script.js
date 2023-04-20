@@ -3,9 +3,10 @@
 
 let selectedRect = null;
 let hoverTime = 0;
-let timer = 20;
+let timer = 30;
 let questionCount = 1;
 let answers = []
+//let command = null; 
 
 let questionText = ["What is your favorite study spot?"," What is your favorite dining hall?"
 ,"How many stickers do you have on your computer?", "How important are song lyrics to you?",
@@ -115,7 +116,27 @@ if (selectedRect !== null) {
   } else {
     hoverTime = 0;
 }
+
+// if (selectedRect !== null) {
+//   hoverTime = command[0];
+//   hoverTime++;
+//  if(hoverTime >= 500) {
+//      answers.push(selectedRect)
+//      hoverTime = 0;
+//      questionCount++;
+//      timer=30;
+//    }
+//    if (questionCount >5){
+//      window.location.href ="results?selection=" + answers;
+//    }
+//  } else {
+//    hoverTime = 0;
+// }
+
+
 }
+
+
   
 
 function mouseMoved() {
@@ -141,5 +162,17 @@ function selection() {
     selectedRect = null;
   }
 }
+
+// function selection() {
+//   if (command[1]='LEFT') {
+//     selectedRect = "A";
+//   } else if (command[1]='MIDDLE']) {
+//     selectedRect = "B";
+//   } else if(command[1='RIGHT']) {
+//     selectedRect = "C";
+//   } else {
+//     selectedRect = null;
+//   }
+// }
 
 
