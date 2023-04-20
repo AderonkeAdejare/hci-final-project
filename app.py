@@ -6,7 +6,7 @@ import random
 
 # Configure application
 app = Flask(__name__)
-app._static_folder = os.path.abspath("templates/static/")
+app._static_folder = os.path.abspath("static/")
 fans=[]
 
 
@@ -21,7 +21,7 @@ def index():
 
 @app.route("/instructions")
 def instructions():
-  return render_template("instructionsl.htm")
+  return render_template("instructions.html")
 
 @app.route("/pause")
 def pause():

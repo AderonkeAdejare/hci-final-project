@@ -115,6 +115,7 @@ if (selectedRect !== null) {
     }
   } else {
     hoverTime = 0;
+    window.location.href ="pause"
 }
 
 // if (selectedRect !== null) {
