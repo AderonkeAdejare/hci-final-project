@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html> 
     <head> 
@@ -11,12 +12,22 @@
     <body> 
         <h1> Results </h1>
 
-
-<p> You are a ___ fan! </p>
-
-        <p> # of AKWers are ___ fans like you! </p>
-
+        <p><span class="placeholder"> You are a {{placeholder}} fan! </span></p>
+        <p><span class="placeholder"> {{ count }} of AKWers are {{placeholder}} fans like you! </span></p>
         <p>Check out the playlist, "What's AKW Listening To?" </p>
         <p> QR Code goes here </p>
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const genre = urlParams.get('genre');
+            const count = urlParams.get('count');
+            document.getElementById('genre').textContent = genre;
+            document.getElementById('count').textContent = count;
+        </script>
+
+
+    
     </body>
 </html>
+
+output_html = template.format(genre=genre, count=count)
