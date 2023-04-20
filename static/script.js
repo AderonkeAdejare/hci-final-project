@@ -110,7 +110,7 @@ if (selectedRect !== null) {
       questionCount++;
       timer=20;
     }
-    if (questionCount >5){
+    if (questionCount == 5){
       window.location.href ="results?selection=" + answers;
     }
   } else {
@@ -127,7 +127,7 @@ if (selectedRect !== null) {
 //      questionCount++;
 //      timer=30;
 //    }
-//    if (questionCount >5){
+//    if (questionCount == 5){
 //      window.location.href ="results?selection=" + answers;
 //    }
 //  } else {
