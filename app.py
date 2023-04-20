@@ -21,15 +21,15 @@ def index():
 def instructions():
   return render_template("instructions.html")
 
-@app.route("/pause")
+@app.route("/pause.html")
 def pause():
   return render_template("pause.html")
 
-@app.route("/questions")
+@app.route("/questions.html")
 def questions():
   return render_template("questions.html")
 
-@app.route("/results")
+@app.route("/results.html")
 def results():
   return render_template("results.html")
 
