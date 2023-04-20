@@ -21,13 +21,13 @@ def index():
 
 @app.route("/instructions")
 def instructions():
-  return render_template("instructions.html")
+  return render_template("instructionsl.htm")
 
-@app.route("/pause.html")
+@app.route("/pause")
 def pause():
   return render_template("pause.html")
 
-@app.route("/questions.html")
+@app.route("/questions")
 def questions():
   return render_template("questions.html")
 
