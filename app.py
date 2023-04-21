@@ -7,29 +7,28 @@ import random
 # Configure application
 app = Flask(__name__)
 app._static_folder = os.path.abspath("static/")
-fans=[]
+app.secret_key = 'your_secret_key'
 
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 @app.route("/")
-#def home():
- #   return "Hello, World!"
 def index():
-  return render_template("index.html")
+      session.clear()
+      return render_template("index.html")
 
 @app.route("/instructions")
 def instructions():
-  return render_template("instructions.html")
+      return render_template("instructions.html")
 
 @app.route("/pause")
 def pause():
-  return render_template("pause.html")
+      return render_template("pause.html")
 
 @app.route("/questions")
 def questions():
-  return render_template("questions.html")
+      return render_template("questions.html")
 
 @app.route("/results")
 def results():
@@ -51,9 +50,15 @@ def results():
     else:
         fantype = option[index]
 
+    ##matbe use session, session
+    fans = session.get('fans', [])
     fans.append(fantype)
-    print(fans)
+    session['fans'] = fans 
+
     count = fans.count(fantype)
+
+    # fans.append(fantype)
+    # count = fans.count(fantype)
 
     return render_template('results.html', count=count, placeholder=fantype)
 

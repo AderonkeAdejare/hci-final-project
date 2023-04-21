@@ -99,7 +99,7 @@ function draw(){
   text(option3[questionCount-1], (windowWidth/10)*7+125, windowHeight/2+50);
 
 if (timer == 0) {
-  window.location.href ="error"
+  window.location.href ="pause"
 }
   // Check if mouse is over a rectangle and start timing
 if (selectedRect !== null) {
@@ -108,9 +108,9 @@ if (selectedRect !== null) {
       answers.push(selectedRect)
       hoverTime = 0;
       questionCount++;
-      timer=20;
+      timer=30;
     }
-    if (questionCount == 5){
+    if (questionCount >= 5){
       window.location.href ="results?selection=" + answers;
     }
   } else {

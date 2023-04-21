@@ -19,11 +19,19 @@
         <p> Game will restart within 30 sec </p>
 
         <script type="text/javascript">
-            const urlParams = new URLSearchParams(window.location.search);
-            const genre = urlParams.get('genre');
-            const count = urlParams.get('count');
-            document.getElementById('genre').textContent = genre;
-            document.getElementById('count').textContent = count;
+            var placeholders = document.getElementsByClassName('placeholder');
+            for (var i = 0; i < placeholders.length; i++) {
+                var placeholderText = placeholders[i].textContent;
+                var newText = placeholderText.replace('{{ placeholder }}', '{{ placeholder }}');
+                placeholders[i].textContent = newText;
+                
+                document.getElementById('count').textContent = '{{ count }}';
+            }
+            
+            
+                
+        
+            
             setTimeout(function() {
                 window.location.href = "/"
             }, 5000);
