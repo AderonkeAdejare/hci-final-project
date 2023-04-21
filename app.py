@@ -43,7 +43,7 @@ def results():
     numB = selection.count('B')
     numC = selection.count('C')
     if numA >= numB and numA >= numC:
-        fantype = "instrumental" ##'A'
+        fantype = "instrumental music" ##'A'
     elif numB >= numC and numB >= numA:
         fantype = "pop music" ##'B'
     elif numC >= numA and numC >= numB:
@@ -52,6 +52,7 @@ def results():
         fantype = option[index]
 
     fans.append(fantype)
+    print(fans)
     count = fans.count(fantype)
 
     return render_template('results.html', count=count, placeholder=fantype)

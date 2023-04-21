@@ -16,13 +16,19 @@
         <p><span class="placeholder"> {{ count }} of AKWers are {{placeholder}} fans like you! </span></p>
         <p>Check out the playlist, "What's AKW Listening To?" </p>
         <p> QR Code goes here </p>
+        <p> Game will restart within 30 sec </p>
 
-        <script>
+        <script type="text/javascript">
             const urlParams = new URLSearchParams(window.location.search);
             const genre = urlParams.get('genre');
             const count = urlParams.get('count');
             document.getElementById('genre').textContent = genre;
             document.getElementById('count').textContent = count;
+            setTimeout(function() {
+                window.location.href = "/"
+            }, 5000);
+</script>
+
         </script>
 
 
@@ -30,4 +36,3 @@
     </body>
 </html>
 
-output_html = template.format(genre=genre, count=count)
