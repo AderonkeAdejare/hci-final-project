@@ -13,25 +13,23 @@ fans=[]
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-@app.route("/")
-#def home():
- #   return "Hello, World!"
+@app.route("/", methods=["GET", "POST"])
 def index():
   return render_template("index.html")
 
-@app.route("/instructions")
+@app.route("/instructions", methods=["GET", "POST"])
 def instructions():
   return render_template("instructions.html")
 
-@app.route("/pause.html")
+@app.route("/pause", methods=["GET", "POST"])
 def pause():
   return render_template("pause.html")
 
-@app.route("/questions.html")
+@app.route("/questions", methods=["GET", "POST"])
 def questions():
   return render_template("questions.html")
 
-@app.route("/results")
+@app.route("/results", methods=["GET", "POST"])
 def results():
     # get selection from URL parameter
     selection = request.args.get('selection')
