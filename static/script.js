@@ -47,8 +47,8 @@ let option2=
   "CPSC 484:HCI"]
 
 let option3=
-  ["Tsai CITY 2", 
-  "Timothy Dwigh", 
+  ["Tsai City", 
+  "Timothy Dwight", 
   "Lots of stickers", 
   "VERY important", 
   "CPSC 323"]
@@ -275,7 +275,7 @@ function setup() {
 
   QuestionPages = [];
   for (let i = 0; i < 5; i++) {
-    QuestionPages[i] = new SelectPage(i + 1, "QUIZ" + (i + 1), questionText[i], 
+    QuestionPages[i] = new SelectPage(i + 1, "Question" + (i + 1), questionText[i], 
     3, [option1[i], option2[i], option3[i]], [0, 1, 2],
     windowWidth, windowHeight);
   }

@@ -31,7 +31,7 @@ def pause():
 def questions():
       return render_template("questions.html")
 
-@app.route("/results")
+@app.route("/results", methods=["GET", "POST"])
 def results():
     # get selection from URL parameter
     selection = request.args.get('selection').split(',')
