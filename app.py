@@ -2,7 +2,7 @@
 import os
 import time
 
-from flask import Flask, flash, redirect, render_template, request, session
+from flask import Flask, flash, redirect, render_template, request, session, jsonify
 import random
 
 # Configure application
@@ -59,11 +59,9 @@ def results():
 
     counter = fans.count(fantype)
 
-    # fans.append(fantype)
-    # count = fans.count(fantype)
+    returnval = ["You are a " + fantype + " fan!", str(counter) + " of AKWers are " + fantype + " fans like you!"]
 
-    return render_template('results.html', count=counter, placeholder=fantype)
-
+    return jsonify(returnval)
 
 
 

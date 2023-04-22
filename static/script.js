@@ -53,6 +53,89 @@ let option3=
   "VERY important", 
   "CPSC 323"]
 
+class ResultPage {
+  constructor(canvasWidth, canvasHeight, img) {
+    this.canvasWidth = canvasWidth;
+    this.canvasHeight = canvasHeight;
+    this.selectedRect = -1;
+    this.hoverTime = 0;
+    this.timer = timerLength
+    this.fantext = "";
+    this.counttext = "";
+    this.img = img;
+
+    this.THREEBOX = {
+      LEFT: {
+        XPOS: canvasWidth/10,
+        YPOS: canvasHeight/2
+      },
+      MIDDLE: {
+        XPOS: (canvasWidth/10)*4,
+        YPOS: canvasHeight/2
+      },
+      RIGHT: {
+        XPOS: (canvasWidth/10)*7,
+        YPOS: canvasHeight/2
+      }
+    };
+  }
+
+  populate(data) {
+    this.fantext = data[0];
+    this.counttext = data[1];
+  }
+  //writing any contents including title, timer and desc
+  drawText(content, xpos, ypos, ts) {
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(ts);
+    text(content, xpos, ypos);
+  }
+  
+  drawQuestionBox(selected, content, xpos, ypos) {
+      // Draw box
+      if (selected) fill(255, 0, 0);
+      else fill(0, 0, 200);
+      rect(xpos, ypos, QBoxXSize, QBoxYSize);
+  
+      // Write text
+      fill(255);
+      textSize(20);
+      textAlign(CENTER, CENTER);
+      text(content, xpos+QBoxXSize/2, ypos+QBoxYSize/2);
+  }
+  
+  draw() {
+    background(250, 250, 250);
+
+    this.drawText("Result", this.canvasWidth / 2, this.canvasHeight / 20);
+    this.drawText(this.fantext, this.canvasWidth / 2, this.canvasHeight/3 - 90, 40);
+    this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 40, 40);
+    this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 40);
+    image(qrcode,this.canvasWidth / 2 - 125, this.canvasHeight / 3 + 70, 250, 250);
+    this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
+  }
+
+  update() {
+    // Wait 30 seconds and return -3 ---> go back to instructions page.
+    if (frameCount % FRAMESECOND == 0) this.timer--;
+    if (this.timer <= 0) return -3;
+    return -1;
+  }
+
+  run() {
+    this.draw();
+    circle(mouseX, mouseY, 30);
+    return this.update();
+  }
+
+  // In Question Window, detect if mouse is seleting a box
+  // later, mouseXPos, mouseYPos will be replaced with motion (left middle right), 
+  //this.THREEBOX.xxxx.XPOS, this.THREEBOX.Lxxxx.YPOS, QBoxXSize, QBoxYSize will be replaced with THREEBOX.xxxx()
+  mouseIsSelectingInQuestionWindow(mouseXPos, mouseYPos) {
+  }
+}
+
 class SelectPage {
   constructor(qnum, title, desc, boxCount, options, optionIndices, canvasWidth, canvasHeight) {
     this.qnum = qnum;
@@ -183,6 +266,9 @@ class SelectPage {
   }
 }
 
+function preload(){
+  qrcode =loadImage("static/spotifyplaylist.png")
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -195,6 +281,7 @@ function setup() {
   }
 
   PausePage = new SelectPage(-2, "PAUSED", "Would you like to continue?", 2, ["Continue", "Quit"], [3, 4], windowWidth, windowHeight);
+  FinalPage = new ResultPage(windowWidth, windowHeight, qrcode);
 
   currentPage = QuestionPages[questionCount];
 }
@@ -203,24 +290,38 @@ function draw(){
   let status = currentPage.run();
   // If status == -1, then keep drawing the page.
   if (status >= 0 && status <= 2) {
-    if (questionCount == 4) {
-      window.location.href = "/results?selection=" + answers
-    }
     answers[questionCount] = status;
     questionCount++;
-    currentPage = QuestionPages[questionCount]
+
+    if (questionCount == 5) {
+      $.ajax({
+        url: "/results?selection=" + answers,
+        type: "GET",
+        success: function (data) {
+          FinalPage.populate(data);
+        },
+        error: function (error) {
+          FinalPage.populate(["Encountered an error when", "connecting to the server."])
+        }
+      });
+      currentPage = FinalPage;
+    } else {
+      // Otherwise, move to the next page
+      currentPage = QuestionPages[questionCount]
+    }
   } else if (status == -2) {
     PausePage.reset();
     currentPage = PausePage;
   } else if (status == 3) {
     currentPage = QuestionPages[questionCount];
     currentPage.reset();
-  } else if (status == 4) {
+  } else if (status == 4 || status == -3) {
     window.location.href = "/"
   }
 
 }
 
 function mouseMoved() {
-  currentPage.mouseIsSelectingInQuestionWindow(mouseX, mouseY);
+  x
+  if (currentPage != null) currentPage.mouseIsSelectingInQuestionWindow(mouseX, mouseY);
 }
