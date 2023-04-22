@@ -1,8 +1,15 @@
 // Adapted from https://p5js.org/examples/interaction-snake-game.html
 //
+var global_var = {
+  position: null,
+  time: null,
+};
+
 var host = "localhost:4444";
 $(document).ready(function() {
-  frames.start();
+  result = frames.start();
+  console.log(result.position);
+  console.log(result.time);
   twod.start();
 });
 
@@ -13,7 +20,6 @@ const direction = {
 }
 
 var counter = -1;
-// var timeCounter = [];
 const locations = [];
 var startTime = null;
 var timeElapsed = 0;
@@ -31,32 +37,35 @@ var frames = {
         var timestamp = frames.get_timestamp(JSON.parse(event.data));
         counter += 1;
         if (command == direction.LEFT) {
-          console.log("LEFT");
+          global_var.position = "LEFT";
           locations.push("LEFT");
         }
         else if (command == direction.RIGHT) {
-          console.log("RIGHT");
+          global_var.position = "RIGHT";
           locations.push("RIGHT");
         }
         else if (command == direction.MIDDLE) {
-          console.log("MIDDLE");
+          global_var.position = "MIDDLE";
           locations.push("MIDDLE");
         }
         
       }
       if (counter != 0) {
         timeElapsed = timestamp - startTime;
-        console.log(timeElapsed/650);
+        global_var.time = timeElapsed/650;
         if (locations[counter] != locations[counter-1]) {
           // new location
           startTime = timestamp;
         }
-        
       }
       else if (counter == 0) {
         startTime = timestamp;
       }
+      return global_var;
+      // console.log(global_var.position);
+      // console.log(global_var.time);
     }
+
   },
 
   get_timestamp: function(frame) {
@@ -71,12 +80,8 @@ var frames = {
 
     // Normalize by subtracting the root (pelvis) joint coordinates
     var pelvis_x = frame.people[0].joints[0].position.x * -1;
-    var pelvis_y = frame.people[0].joints[0].position.y * -1;
-    var pelvis_z = frame.people[0].joints[0].position.z * -1;
-
-    // if (pelvis_z < 100) {
-    //   return command;
-    // }
+    // var pelvis_y = frame.people[0].joints[0].position.y * -1;
+    // var pelvis_z = frame.people[0].joints[0].position.z * -1;
 
     if (pelvis_x < -400) {
       command = direction.LEFT; // LEFT
