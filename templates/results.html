@@ -15,7 +15,7 @@
         <p><span class="placeholder"> You are a {{placeholder}} fan! </span></p>
         <p><span class="placeholder"> {{ count }} of AKWers are {{placeholder}} fans like you! </span></p>
         <p>Check out the playlist, "What's AKW Listening To?" </p>
-        <img src="../static/spotifyplaylist.png" alt="QR Code to 'What's AKW Listening Playlist' on Spotify">
+        <center> <img src="../static/spotifyplaylist.png" alt="QR Code to 'What's AKW Listening Playlist' on Spotify"> </center>
         <p> Game will restart within 30 sec </p>
 
         <script type="text/javascript">
@@ -28,15 +28,10 @@
                 document.getElementById('count').textContent = '{{ count }}';
             }
             
-            
-
             setTimeout(function() {
                 window.location.href = "/"
             }, 5000);
-</script>
-
         </script>
-
 
     
     </body>

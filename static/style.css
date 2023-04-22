@@ -1,18 +1,19 @@
 /* Import Bootstrap */
-/* Functions first */
-@import "../node_modules/bootstrap/scss/functions";
 
-/* Variable overrides second */
+/* Variable overrides second 
 $primary: #900;
 $enable-shadows: true;
-$prefix: "mo-";
+$prefix: "mo-"; */
 
-/* Required Bootstrap imports */
+/* Functions first */
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+/* Required Bootstrap imports 
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/variables-dark";
 @import "../node_modules/bootstrap/scss/maps";
 @import "../node_modules/bootstrap/scss/mixins";
-@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/root"; */
 
 /* Icons */
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css");
@@ -29,9 +30,14 @@ body {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 72px;
   margin-top: 100px;
   margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 36px; 
+  position: relative;   
 }
 
 p {
@@ -75,4 +81,14 @@ button:hover {
   margin: 0 20px;
 }
 
+.right-button{
+  position: relative;   
+  left: 30%;
+  justify-content: right;
+}
 
+.left-button{
+  position: relative;   
+  right: 30%;
+  justify-content: left;
+}

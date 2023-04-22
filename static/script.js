@@ -275,7 +275,7 @@ function setup() {
 
   QuestionPages = [];
   for (let i = 0; i < 5; i++) {
-    QuestionPages[i] = new SelectPage(i + 1, "Question" + (i + 1), questionText[i], 
+    QuestionPages[i] = new SelectPage(i + 1, "Question " + (i + 1) + "/5", questionText[i], 
     3, [option1[i], option2[i], option3[i]], [0, 1, 2],
     windowWidth, windowHeight);
   }
