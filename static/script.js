@@ -371,7 +371,7 @@ var frames = {
           locations.push("LEFT");
         }
         else if (command == direction.RIGHT) {
-          global_var.position=RIGHT;
+          global_var.position="RIGHT";
           locations.push("RIGHT");
         }
         else if (command == direction.MIDDLE) {
