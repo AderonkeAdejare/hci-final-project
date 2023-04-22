@@ -1,58 +1,68 @@
 # Python file for Flask 
 import os
+import time
 
 from flask import Flask, flash, redirect, render_template, request, session
 import random
 
 # Configure application
 app = Flask(__name__)
-app._static_folder = os.path.abspath("templates/static/")
-fans=[]
+app._static_folder = os.path.abspath("static/")
+app.secret_key = 'your_secret_key'
 
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-  return render_template("index.html")
+      session.clear()
+      return render_template("index.html")
 
-@app.route("/instructions", methods=["GET", "POST"])
+@app.route("/instructions")
 def instructions():
-  return render_template("instructions.html")
+      return render_template("instructions.html")
 
-@app.route("/pause", methods=["GET", "POST"])
+@app.route("/pause")
 def pause():
-  return render_template("pause.html")
+      return render_template("pause.html")
 
-@app.route("/questions", methods=["GET", "POST"])
+@app.route("/questions")
 def questions():
-  return render_template("questions.html")
+      return render_template("questions.html")
 
 @app.route("/results", methods=["GET", "POST"])
 def results():
     # get selection from URL parameter
-    selection = request.args.get('selection')
-    option = ["A", "B", "C"]
+    selection = request.args.get('selection').split(',')
+    selection = [int(x) for x in selection]
+    option = [0, 1, 2]
     index = random.randint(0, 2)
 
     # Parse selection to determine fan type
-    numA = selection.count('A')
-    numB = selection.count('B')
-    numC = selection.count('C')
+    numA = selection.count(0)
+    numB = selection.count(1)
+    numC = selection.count(2)
     if numA >= numB and numA >= numC:
-        fantype = "instrumental" ##'A'
+        fantype = "instrumental music" ##'0'
     elif numB >= numC and numB >= numA:
-        fantype = "pop music" ##'B'
+        fantype = "pop music" ##'1'
     elif numC >= numA and numC >= numB:
-        fantype = "hard rock" ##c
+        fantype = "hard rock" ##2
     else:
         fantype = option[index]
 
+    ##matbe use session, session
+    fans = session.get('fans', [])
     fans.append(fantype)
-    count = fans.count(fantype)
+    session['fans'] = fans 
 
-    return render_template('results.html', count=count, placeholder=fantype)
+    counter = fans.count(fantype)
+
+    # fans.append(fantype)
+    # count = fans.count(fantype)
+
+    return render_template('results.html', count=counter, placeholder=fantype)
 
 
 

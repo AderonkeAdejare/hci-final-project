@@ -1,178 +1,226 @@
 // https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
 //https://www.youtube.com/watch?v=exRAM1ZWm_s
 
-let selectedRect = null;
-let hoverTime = 0;
-let timer = 30;
-let questionCount = 1;
-let answers = []
-//let command = null; 
+/************************* LIST OF CONSTANTS *****************************/
+// Page type enumerator
+const Page = {
+  QUESTION: 1,
+  PAUSE: 2
+};
 
-let questionText = ["What is your favorite study spot?"," What is your favorite dining hall?"
-,"How many stickers do you have on your computer?", "How important are song lyrics to you?",
-"What is the best CS class at Yale?"]
-let option1=["Bass Library", "Saybrook", "No stickers", 
-"Not super important", "CS50"]
-let option2=["The Good Life Center", "Commons", "A few stickers", 
-"Neutral", "CPSC 484:HCI"]
-let option3=["Tsai CITY 2", "Timothy Dwigh", "Lots of stickers", 
-"VERY important", "CPSC 323"]
+const timerLength = 30;
+const QBoxXSize = 250;
+const QBoxYSize = 100;
+const HOVERTHRESHOLD = 100;
+const FRAMESECOND = 60;
+
+// Initialized in the SetupFunction
+var ThreeBox;
+
+/**************************************************************************/
+
+
+
+let questionCount = 0;
+let answers = [] //pass to questions.html
+let displayPage = Page.QUESTION;
+let currentPage = null;
+
+let questionText = 
+  ["What is your favorite study spot?", 
+  "What is your favorite dining hall?", 
+  "How many stickers do you have on your computer?", 
+  "How important are song lyrics to you?",
+  "What is the best CS class at Yale?"]
+
+let option1=
+  ["Bass Library", 
+  "Saybrook", 
+  "No stickers", 
+  "Not super important",
+  "CS50"]
+
+let option2=
+  ["The Good Life Center", 
+  "Commons", "A few stickers", 
+  "Neutral", 
+  "CPSC 484:HCI"]
+
+let option3=
+  ["Tsai CITY 2", 
+  "Timothy Dwigh", 
+  "Lots of stickers", 
+  "VERY important", 
+  "CPSC 323"]
+
+class SelectPage {
+  constructor(qnum, title, desc, boxCount, options, optionIndices, canvasWidth, canvasHeight) {
+    this.qnum = qnum;
+    this.title = title;
+    this.desc = desc;
+    this.boxCount = boxCount;
+    this.options = options;
+    this.optionIndices = optionIndices;
+    this.canvasWidth = canvasWidth;
+    this.canvasHeight = canvasHeight;
+    this.selectedRect = -1;
+    this.hoverTime = 0;
+    this.timer = timerLength;
+
+    this.THREEBOX = {
+      LEFT: {
+        XPOS: canvasWidth/10,
+        YPOS: canvasHeight/2
+      },
+      MIDDLE: {
+        XPOS: (canvasWidth/10)*4,
+        YPOS: canvasHeight/2
+      },
+      RIGHT: {
+        XPOS: (canvasWidth/10)*7,
+        YPOS: canvasHeight/2
+      }
+    };
+  }
+
+  reset() {
+    this.selectedRect =- 1;
+    this.hoverTime = 0;
+    this.timer = timerLength;
+  }
+  //writing any contents including title, timer and desc
+  drawText(content, xpos, ypos) {
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(50);
+    text(content, xpos, ypos);
+  }
+  
+  drawQuestionBox(selected, content, xpos, ypos) {
+      // Draw box
+      if (selected) fill(255, 0, 0);
+      else fill(0, 0, 200);
+      rect(xpos, ypos, QBoxXSize, QBoxYSize);
+  
+      // Write text
+      fill(255);
+      textSize(20);
+      textAlign(CENTER, CENTER);
+      text(content, xpos+QBoxXSize/2, ypos+QBoxYSize/2);
+  }
+  
+  draw() {
+    background(250, 250, 250);
+    this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20);
+    this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
+    this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4);
+    
+    // Draw answer rectangle (for queston pages)
+    if (this.boxCount == 3) {
+      this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS);
+      this.drawQuestionBox(this.selectedRect == this.optionIndices[1], this.options[1], this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS);
+      this.drawQuestionBox(this.selectedRect == this.optionIndices[2], this.options[2], this.THREEBOX.RIGHT.XPOS, this.THREEBOX.RIGHT.YPOS);  
+    } else if (this.boxCount == 2) {
+      this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS);
+      this.drawQuestionBox(this.selectedRect == this.optionIndices[1], this.options[1], this.THREEBOX.RIGHT.XPOS, this.THREEBOX.RIGHT.YPOS);  
+    } else {
+      this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS);
+    }
+  }
+
+  update() {
+    // Update various counters
+    if (frameCount % FRAMESECOND == 0) this.timer--;
+    if (this.selectedRect >= 0) this.hoverTime++;
+    else this.hoverTime = 0;
+
+    // Based on counters, change page state.
+    // 1. Move onto the next question
+    if(this.hoverTime >= HOVERTHRESHOLD) return this.selectedRect;
+
+    if (this.timer <= 0) return -2;
+
+    return -1;
+  }
+
+  run() {
+    this.draw();
+    circle(mouseX, mouseY, 30);
+    return this.update();
+  }
+//maybe not needed when we using motion capturing. 
+  isMouseWithin(mouseXPos, mouseYPos, boxXPos, boxYPos, boxWidth, boxHeight) {
+    if (mouseXPos > boxXPos - 10 && 
+        mouseXPos < boxXPos + boxWidth + 10 && 
+        mouseYPos > boxYPos - 10 && 
+        mouseYPos < boxYPos + boxHeight + 10) return true;
+    return false;
+  }
+  
+  // In Question Window, detect if mouse is seleting a box
+  // later, mouseXPos, mouseYPos will be replaced with motion (left middle right), 
+  //this.THREEBOX.xxxx.XPOS, this.THREEBOX.Lxxxx.YPOS, QBoxXSize, QBoxYSize will be replaced with THREEBOX.xxxx()
+  mouseIsSelectingInQuestionWindow(mouseXPos, mouseYPos) {
+    if (this.boxCount == 3) {
+      if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS, QBoxXSize, QBoxYSize)) 
+      this.selectedRect = this.optionIndices[0]; //0
+      else if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS, QBoxXSize, QBoxYSize)) 
+        this.selectedRect = this.optionIndices[1]; //1
+      else if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.RIGHT.XPOS, this.THREEBOX.RIGHT.YPOS, QBoxXSize, QBoxYSize))
+        this.selectedRect = this.optionIndices[2]; //12
+      else this.selectedRect = -1; // not selecting
+    } else if (this.boxCount == 2) {
+      if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS, QBoxXSize, QBoxYSize)) 
+      this.selectedRect = this.optionIndices[0];
+      else if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.RIGHT.XPOS, this.THREEBOX.RIGHT.YPOS, QBoxXSize, QBoxYSize))
+        this.selectedRect = this.optionIndices[1];
+      else this.selectedRect = -1;
+    } else if (this.boxCount == 1) {
+      if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS, QBoxXSize, QBoxYSize)) 
+        this.selectedRect = this.optionIndices[0];
+      else this.selectedRect = -1;
+    }
+  }
+}
 
 
 function setup() {
-  let answercanvas=createCanvas(windowWidth, windowHeight);
-  answercanvas.parent("answer-container");
-  
+  createCanvas(windowWidth, windowHeight);
+
+  QuestionPages = [];
+  for (let i = 0; i < 5; i++) {
+    QuestionPages[i] = new SelectPage(i + 1, "QUIZ" + (i + 1), questionText[i], 
+    3, [option1[i], option2[i], option3[i]], [0, 1, 2],
+    windowWidth, windowHeight);
+  }
+
+  PausePage = new SelectPage(-2, "PAUSED", "Would you like to continue?", 2, ["Continue", "Quit"], [3, 4], windowWidth, windowHeight);
+
+  currentPage = QuestionPages[questionCount];
 }
 
 function draw(){
-  background(250, 250, 250);
-
-// question 
-  fill(0);
-  textAlign(CENTER, CENTER);
-  textSize(50);
-  text("QUIZ"+questionCount, windowWidth/2, windowHeight/20);
-
-
-  //timer
-  fill(0);
-  textAlign(CENTER, CENTER);
-  textSize(50);
-  text(timer, windowWidth/2, windowHeight-100);
-  if (frameCount % 60 == 0 && timer > 0) {
-    timer --;
-  }
- 
-  
-  //question come here 
-  fill(0);
-  textSize(40);
-  textAlign(CENTER, CENTER);
-  text(questionText[questionCount-1], windowWidth/2, windowHeight/4);
-  
-  
-  circle(mouseX, mouseY, 30);
-  
-  // Draw the first rectangle
-  if (selectedRect == "A") {
-    fill(255, 0, 0);
-  } else {
-    fill(0, 0, 200);
-  }
-  rect(windowWidth/10, windowHeight/2, 250, 100);
-  
-  // Draw the second rectangle
-  if (selectedRect == "B") {
-    fill(255, 0, 0);
-  } else {
-    fill(0, 0, 200);
-  }
-  rect((windowWidth/10)*4, windowHeight/2, 250, 100);
-
-  if (selectedRect == "C") {
-    fill(255, 0, 0);
-  } else {
-    fill(0, 0, 200);
-  }
-  rect((windowWidth/10)*7, windowHeight/2, 250, 100);
-
-
-
-  // Add text to the first rectangle
-  fill(255);
-  textSize(20);
-  textAlign(CENTER, CENTER);
-  text(option1[questionCount-1], windowWidth/10+125, windowHeight/2+50);
-
-
-  // Add text to the second rectangle
-  fill(255);
-  textSize(20);
-  textAlign(CENTER, CENTER);
-  text(option2[questionCount-1], (windowWidth/10)*4+125, windowHeight/2+50);
-
-  // Add text to the third rectangle
-  fill(255);
-  textSize(20);
-  textAlign(CENTER, CENTER);
-  text(option3[questionCount-1], (windowWidth/10)*7+125, windowHeight/2+50);
-
-if (timer == 0) {
-  window.location.href ="error"
-}
-  // Check if mouse is over a rectangle and start timing
-if (selectedRect !== null) {
-   hoverTime++;
-  if(hoverTime >= 500) {
-      answers.push(selectedRect)
-      hoverTime = 0;
-      questionCount++;
-      timer=20;
+  let status = currentPage.run();
+  // If status == -1, then keep drawing the page.
+  if (status >= 0 && status <= 2) {
+    if (questionCount == 4) {
+      window.location.href = "/results?selection=" + answers
     }
-    if (questionCount >5){
-      window.location.href ="results?selection=" + answers;
-    }
-  } else {
-    hoverTime = 0;
-}
-
-// if (selectedRect !== null) {
-//   hoverTime = command[0];
-//   hoverTime++;
-//  if(hoverTime >= 500) {
-//      answers.push(selectedRect)
-//      hoverTime = 0;
-//      questionCount++;
-//      timer=30;
-//    }
-//    if (questionCount >5){
-//      window.location.href ="results?selection=" + answers;
-//    }
-//  } else {
-//    hoverTime = 0;
-// }
-
+    answers[questionCount] = status;
+    questionCount++;
+    currentPage = QuestionPages[questionCount]
+  } else if (status == -2) {
+    PausePage.reset();
+    currentPage = PausePage;
+  } else if (status == 3) {
+    currentPage = QuestionPages[questionCount];
+    currentPage.reset();
+  } else if (status == 4) {
+    window.location.href = "/"
+  }
 
 }
-
-
-  
 
 function mouseMoved() {
-  selection();
+  currentPage.mouseIsSelectingInQuestionWindow(mouseX, mouseY);
 }
-
-
-//now working on mouseX and mouseY
-function selection() {
-  if (mouseX > windowWidth/10-10 && 
-  mouseX < windowWidth/10+260 && 
-  mouseY > windowHeight/2-10 && mouseY < windowHeight/2+110) {
-    selectedRect = "A";
-  } else if (mouseX > (windowWidth/10)*4-10 && 
-  mouseX < (windowWidth/10)*4+260 && 
-  mouseY > windowHeight/2-10 && mouseY < windowHeight/2+110) {
-    selectedRect = "B";
-  } else if(mouseX > (windowWidth/10)*7-10 && 
-  mouseX < (windowWidth/10)*7+260 && mouseY > windowHeight/2-10 && 
-  mouseY < windowHeight/2+110) {
-    selectedRect = "C";
-  } else {
-    selectedRect = null;
-  }
-}
-
-// function selection() {
-//   if (command[1]='LEFT') {
-//     selectedRect = "A";
-//   } else if (command[1]='MIDDLE']) {
-//     selectedRect = "B";
-//   } else if(command[1='RIGHT']) {
-//     selectedRect = "C";
-//   } else {
-//     selectedRect = null;
-//   }
-// }
-
-

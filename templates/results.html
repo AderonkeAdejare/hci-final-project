@@ -16,14 +16,25 @@
         <p><span class="placeholder"> {{ count }} of AKWers are {{placeholder}} fans like you! </span></p>
         <p>Check out the playlist, "What's AKW Listening To?" </p>
         <img src="../static/spotifyplaylist.png" alt="QR Code to 'What's AKW Listening Playlist' on Spotify">
+        <p> Game will restart within 30 sec </p>
 
+        <script type="text/javascript">
+            var placeholders = document.getElementsByClassName('placeholder');
+            for (var i = 0; i < placeholders.length; i++) {
+                var placeholderText = placeholders[i].textContent;
+                var newText = placeholderText.replace('{{ placeholder }}', '{{ placeholder }}');
+                placeholders[i].textContent = newText;
+                
+                document.getElementById('count').textContent = '{{ count }}';
+            }
+            
+            
 
-        <script>
-            const urlParams = new URLSearchParams(window.location.search);
-            const genre = urlParams.get('genre');
-            const count = urlParams.get('count');
-            document.getElementById('genre').textContent = genre;
-            document.getElementById('count').textContent = count;
+            setTimeout(function() {
+                window.location.href = "/"
+            }, 5000);
+</script>
+
         </script>
 
 
@@ -31,4 +42,3 @@
     </body>
 </html>
 
-output_html = template.format(genre=genre, count=count)
