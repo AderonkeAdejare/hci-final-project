@@ -34,14 +34,15 @@ def questions():
 @app.route("/results")
 def results():
     # get selection from URL parameter
-    selection = request.args.get('selection')
-    option = ["A", "B", "C"]
+    selection = request.args.get('selection').split(',')
+    selection = [int(x) for x in selection]
+    option = [0, 1, 2]
     index = random.randint(0, 2)
 
     # Parse selection to determine fan type
-    numA = selection.count('A')
-    numB = selection.count('B')
-    numC = selection.count('C')
+    numA = selection.count(0)
+    numB = selection.count(1)
+    numC = selection.count(2)
     if numA >= numB and numA >= numC:
         fantype = "instrumental music" ##'A'
     elif numB >= numC and numB >= numA:
@@ -56,12 +57,12 @@ def results():
     fans.append(fantype)
     session['fans'] = fans 
 
-    count = fans.count(fantype)
+    counter = fans.count(fantype)
 
     # fans.append(fantype)
     # count = fans.count(fantype)
 
-    return render_template('results.html', count=count, placeholder=fantype)
+    return render_template('results.html', count=counter, placeholder=fantype)
 
 
 
