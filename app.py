@@ -1,5 +1,6 @@
 # Python file for Flask 
 import os
+import time
 
 from flask import Flask, flash, redirect, render_template, request, session
 import random

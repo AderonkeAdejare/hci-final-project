@@ -115,7 +115,7 @@ if (selectedRect !== null) {
     }
   } else {
     hoverTime = 0;
-    window.location.href ="pause"
+    //window.location.href ="pause"
 }
 
 // if (selectedRect !== null) {
@@ -141,12 +141,12 @@ if (selectedRect !== null) {
   
 
 function mouseMoved() {
-  selection();
+  select();
 }
 
 
 //now working on mouseX and mouseY
-function selection() {
+function select() {
   if (mouseX > windowWidth/10-10 && 
   mouseX < windowWidth/10+260 && 
   mouseY > windowHeight/2-10 && mouseY < windowHeight/2+110) {
