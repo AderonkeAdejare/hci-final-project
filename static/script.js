@@ -8,7 +8,7 @@ const Page = {
   PAUSE: 2
 };
 
-const timerLength = 10;
+const timerLength = 30;
 const QBoxXSize = 250;
 const QBoxYSize = 100;
 const HOVERTHRESHOLD = 100;
@@ -22,7 +22,7 @@ var ThreeBox;
 
 
 let questionCount = 0;
-let answers = []
+let answers = [] //pass to questions.html
 let displayPage = Page.QUESTION;
 let currentPage = null;
 
@@ -70,15 +70,15 @@ class SelectPage {
     this.THREEBOX = {
       LEFT: {
         XPOS: canvasWidth/10,
-        YPOS: canvasWidth/2
+        YPOS: canvasHeight/2
       },
       MIDDLE: {
         XPOS: (canvasWidth/10)*4,
-        YPOS: canvasWidth/2
+        YPOS: canvasHeight/2
       },
       RIGHT: {
         XPOS: (canvasWidth/10)*7,
-        YPOS: canvasWidth/2
+        YPOS: canvasHeight/2
       }
     };
   }
@@ -88,7 +88,7 @@ class SelectPage {
     this.hoverTime = 0;
     this.timer = timerLength;
   }
-
+  //writing any contents including title, timer and desc
   drawText(content, xpos, ypos) {
     fill(0);
     textAlign(CENTER, CENTER);
@@ -115,7 +115,7 @@ class SelectPage {
     this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
     this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4);
     
-    // Draw answer rectangle
+    // Draw answer rectangle (for queston pages)
     if (this.boxCount == 3) {
       this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS);
       this.drawQuestionBox(this.selectedRect == this.optionIndices[1], this.options[1], this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS);
@@ -148,7 +148,7 @@ class SelectPage {
     circle(mouseX, mouseY, 30);
     return this.update();
   }
-
+//maybe not needed when we using motion capturing. 
   isMouseWithin(mouseXPos, mouseYPos, boxXPos, boxYPos, boxWidth, boxHeight) {
     if (mouseXPos > boxXPos - 10 && 
         mouseXPos < boxXPos + boxWidth + 10 && 
@@ -158,15 +158,17 @@ class SelectPage {
   }
   
   // In Question Window, detect if mouse is seleting a box
+  // later, mouseXPos, mouseYPos will be replaced with motion (left middle right), 
+  //this.THREEBOX.xxxx.XPOS, this.THREEBOX.Lxxxx.YPOS, QBoxXSize, QBoxYSize will be replaced with THREEBOX.xxxx()
   mouseIsSelectingInQuestionWindow(mouseXPos, mouseYPos) {
     if (this.boxCount == 3) {
       if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS, QBoxXSize, QBoxYSize)) 
-      this.selectedRect = this.optionIndices[0];
+      this.selectedRect = this.optionIndices[0]; //0
       else if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS, QBoxXSize, QBoxYSize)) 
-        this.selectedRect = this.optionIndices[1];
+        this.selectedRect = this.optionIndices[1]; //1
       else if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.RIGHT.XPOS, this.THREEBOX.RIGHT.YPOS, QBoxXSize, QBoxYSize))
-        this.selectedRect = this.optionIndices[2];
-      else this.selectedRect = -1;
+        this.selectedRect = this.optionIndices[2]; //12
+      else this.selectedRect = -1; // not selecting
     } else if (this.boxCount == 2) {
       if (this.isMouseWithin(mouseXPos, mouseYPos, this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS, QBoxXSize, QBoxYSize)) 
       this.selectedRect = this.optionIndices[0];
@@ -214,7 +216,7 @@ function draw(){
     currentPage = QuestionPages[questionCount];
     currentPage.reset();
   } else if (status == 4) {
-    window.location.href = "/instructions"
+    window.location.href = "/"
   }
 
 }

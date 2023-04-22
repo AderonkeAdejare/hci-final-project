@@ -44,11 +44,11 @@ def results():
     numB = selection.count(1)
     numC = selection.count(2)
     if numA >= numB and numA >= numC:
-        fantype = "instrumental music" ##'A'
+        fantype = "instrumental music" ##'0'
     elif numB >= numC and numB >= numA:
-        fantype = "pop music" ##'B'
+        fantype = "pop music" ##'1'
     elif numC >= numA and numC >= numB:
-        fantype = "hard rock" ##c
+        fantype = "hard rock" ##2
     else:
         fantype = option[index]
 
