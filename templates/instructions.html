@@ -31,6 +31,24 @@
         window.location.href = "questions"
     }, 5000);
 </script>
+        
+<div class="countdown-container">
+  <div class="countdown" id="countdown">Timer: 40</div>
+</div>
+
+<!-- timer stuff here -->
+
+<script type="text/javascript">
+  var secondsLeft = 40;
+  setInterval(function() {
+    secondsLeft--;
+    document.getElementById("countdown").innerHTML = "Timer: " + secondsLeft;
+    if (secondsLeft == 0) {
+      window.location.href = "questions.html";
+    }
+  }, 1000);
+</script>
+
 
     </body>
 </html>
