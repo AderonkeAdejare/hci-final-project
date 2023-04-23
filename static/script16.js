@@ -314,9 +314,15 @@ class SelectPage {
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 40);
-      this.drawText("Move to the side of the option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 40);
-      this.drawText("If no response, it will automatically end",this.canvasWidth /2, this.canvasHeight/3+10, 40);
-    } else {
+      this.drawText("Move to the Side of the Option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 40);
+      this.drawText("If No Response, It will Automatically End",this.canvasWidth /2, this.canvasHeight/3+10, 40);
+    } else if (this.qnum == -4){
+      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40);
+      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40);
+      this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 40);
+      this.drawText("Single Player Mode Only.",this.canvasWidth /2, this.canvasHeight/3-40, 40);
+    }
+    else {
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4, 50);
@@ -409,9 +415,9 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  FirstPage = new SelectPage(-2, "What's AKW Listening To?", "Move to the middle to begin! Single player mode only.", 1, ["Begin"], [5], windowWidth, windowHeight);
+  FirstPage = new SelectPage(-4, "What's AKW Listening To?", "Move to the Middle to Begin!", 1, ["Begin"], [5], windowWidth, windowHeight);
   
-  InstructPage = new SelectPage(-3, "Instruction", "To select the answer", 1, ["Continue"], [3], windowWidth, windowHeight);
+  InstructPage = new SelectPage(-3, "Instruction", "To Select the Answer", 1, ["Continue"], [3], windowWidth, windowHeight);
 
   QuestionPages = [];
   for (let i = 0; i < 5; i++) {
@@ -421,7 +427,7 @@ function setup() {
   }
 
   
-  PausePage = new SelectPage(-2, "PAUSED", "Would you like to continue?", 2, ["Continue", "Quit"], [3, 4], windowWidth, windowHeight);
+  PausePage = new SelectPage(-2, "PAUSED", "Would you Like to Continue?", 2, ["Continue", "Quit"], [3, 4], windowWidth, windowHeight);
   FinalPage = new ResultPage(windowWidth, windowHeight, qrcode);
 
   currentPage = FirstPage;
