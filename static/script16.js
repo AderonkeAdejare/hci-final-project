@@ -337,7 +337,7 @@ class SelectPage {
       this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS);
       this.drawQuestionBox(this.selectedRect == this.optionIndices[1], this.options[1], this.THREEBOX.RIGHT.XPOS, this.THREEBOX.RIGHT.YPOS);  
     } else {
-      this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.RIGHT.XPOS, this.THREEBOX.RIGHT.YPOS);
+      this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.RIGHT.YPOS);
     }
   }
     //update returning selectionRec 0, 1, 2 not selected -1 or it goes puase -2 
@@ -429,9 +429,9 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  FirstPage = new SelectPage(-2, "What's AKW Listening To?", "Move to the Right to begin", 2, ["Next Time","Begin"], [4, 5], windowWidth, windowHeight);
+  FirstPage = new SelectPage(-2, "What's AKW Listening To?", "Stay in the middle to begin", 1, ["Begin"], [5], windowWidth, windowHeight);
   
-  InstructPage = new SelectPage(-3, "Instruction", "To select the answer", 2, ["Quit.","Continue"], [4, 3], windowWidth, windowHeight);
+  InstructPage = new SelectPage(-3, "Instruction", "To select the answer", 1, ["Continue"], [3], windowWidth, windowHeight);
 
   QuestionPages = [];
   for (let i = 0; i < 5; i++) {
