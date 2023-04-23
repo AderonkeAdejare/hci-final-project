@@ -2,7 +2,6 @@
 //https://www.youtube.com/watch?v=exRAM1ZWm_s
 
 let pos = "0";
-let time_curr = 0;
   
     /////////////////////////////
     // Adapted from https://p5js.org/examples/interaction-snake-game.html
@@ -14,9 +13,9 @@ let time_curr = 0;
     });
     
     const direction = {
-      LEFT: 0,
-      RIGHT: 1,
-      MIDDLE: 2
+      LEFT: "LEFT",
+      RIGHT: "RIGHT",
+      MIDDLE: "MIDDLE"
     }
     
     var counter = -1;
@@ -242,14 +241,12 @@ let time_curr = 0;
     
       run() {
         this.draw();
+        //it will remove eventually
         circle(mouseX, mouseY, 30);
         return this.update();
       }
     
-      // In Question Window, detect if mouse is seleting a box
-      // later, mouseXPos, mouseYPos will be replaced with motion (left middle right), 
-      //this.THREEBOX.xxxx.XPOS, this.THREEBOX.Lxxxx.YPOS, QBoxXSize, QBoxYSize will be replaced with THREEBOX.xxxx()
-      mouseIsSelectingInQuestionWindow(mouseXPos, mouseYPos) {
+      posIsSelectingInQuestionWindow(pos) {
       }
     }
     
@@ -315,7 +312,7 @@ let time_curr = 0;
         this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
         this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4);
         
-        // Draw answer rectangle (for queston pages)
+        // Draw answer rectangle 
         if (this.boxCount == 3) {
           this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS);
           this.drawQuestionBox(this.selectedRect == this.optionIndices[1], this.options[1], this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS);
@@ -327,7 +324,7 @@ let time_curr = 0;
           this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS);
         }
       }
-    
+       //update returning selectionRec 0, 1, 2 not selected -1 or it goes puase -2 
       update() {
         // Update various counters
         if (frameCount % FRAMESECOND == 0) this.timer--;
@@ -336,12 +333,7 @@ let time_curr = 0;
     
         // Based on counters, change page state.
         // 1. Move onto the next question
-        console.log(pos);
-        console.log(time_curr);
-        console.log(HOVERTHRESHOLD);
-        console.log(time_curr >= HOVERTHRESHOLD);
-        
-        if(time_curr >= HOVERTHRESHOLD) return this.selectedRect;
+        if(this.hoverTime >= HOVERTHRESHOLD * 60) return this.selectedRect;
     
         if (this.timer <= 0) return -2;
     
@@ -350,10 +342,11 @@ let time_curr = 0;
     
       run() {
         this.draw();
+        //it will remove eventually/ 
         circle(mouseX, mouseY, 30);
         return this.update();
       }
-    //maybe not needed when we using motion capturing. 
+      //maybe not needed when we using motion capturing. 
       // isMouseWithin(pos, boxXPos, boxYPos, boxWidth, boxHeight) {
       //     if (pos == "LEFT")
       //   if (mouseXPos > boxXPos - 10 && 
@@ -367,7 +360,8 @@ let time_curr = 0;
       // In Question Window, detect if mouse is seleting a box
       // later, mouseXPos, mouseYPos will be replaced with motion (left middle right), 
       //this.THREEBOX.xxxx.XPOS, this.THREEBOX.Lxxxx.YPOS, QBoxXSize, QBoxYSize will be replaced with THREEBOX.xxxx()
-      mouseIsSelectingInQuestionWindow(pos, time_curr) {
+      posIsSelectingInQuestionWindow(pos) {
+        let prevSelection = this.selectedRect;
         if (this.boxCount == 3) {
           // if (this.isMouseWithin(pos, this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS, QBoxXSize, QBoxYSize)) 
           if (pos == null) {
@@ -380,7 +374,7 @@ let time_curr = 0;
               this.selectedRect = this.optionIndices[1]; //1
           }
           else if (pos == direction.RIGHT) {
-              this.selectedRect = this.optionIndices[2]; //12
+              this.selectedRect = this.optionIndices[2]; //2
           }
 
         } else if (this.boxCount == 2) {
@@ -393,7 +387,7 @@ let time_curr = 0;
             else if (pos == direction.RIGHT) {
               this.selectedRect = this.optionIndices[1];
             }
-
+        //in case I need to use one box; currently not using it; 
         } else if (this.boxCount == 1) {
             if (pos == null) {
               this.selectedRect = -1;
@@ -401,8 +395,9 @@ let time_curr = 0;
             else if (pos == direction.MIDDLE) {
               this.selectedRect = this.optionIndices[0];
             }
-
         }
+        //once it is selected, reset hovertime again. 
+        if (prevSelection != this.selectedRect) this.hoverTime = 0;
       }
     }
     
@@ -410,58 +405,54 @@ let time_curr = 0;
       qrcode =loadImage("static/spotifyplaylist.png")
     }
     
-    function setup() {
-      createCanvas(windowWidth, windowHeight);
-    
-      QuestionPages = [];
-      for (let i = 0; i < 5; i++) {
-        QuestionPages[i] = new SelectPage(i + 1, "Question" + (i + 1), questionText[i], 
-        3, [option1[i], option2[i], option3[i]], [0, 1, 2],
-        windowWidth, windowHeight);
-      }
-    
-      PausePage = new SelectPage(-2, "PAUSED", "Would you like to continue?", 2, ["Continue", "Quit"], [3, 4], windowWidth, windowHeight);
-      FinalPage = new ResultPage(windowWidth, windowHeight, qrcode);
-    
-      currentPage = QuestionPages[questionCount];
-    }
-    
-    function draw(){
-      let status = currentPage.run();
-      // If status == -1, then keep drawing the page.
-      if (status >= 0 && status <= 2) {
-        answers[questionCount] = status;
-        questionCount++;
-    
-        if (questionCount == 5) {
-          $.ajax({
-            url: "/results?selection=" + answers,
-            type: "GET",
-            success: function (data) {
-              FinalPage.populate(data);
-            },
-            error: function (error) {
-              FinalPage.populate(["Encountered an error when", "connecting to the server."])
-            }
-          });
-          currentPage = FinalPage;
-        } else {
-          // Otherwise, move to the next page
-          currentPage = QuestionPages[questionCount]
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+
+  QuestionPages = [];
+  for (let i = 0; i < 5; i++) {
+    QuestionPages[i] = new SelectPage(i + 1, "Question" + (i + 1), questionText[i], 
+    3, [option1[i], option2[i], option3[i]], [0, 1, 2],
+    windowWidth, windowHeight);
+  }
+
+  PausePage = new SelectPage(-2, "PAUSED", "Would you like to continue?", 2, ["Continue", "Quit"], [3, 4], windowWidth, windowHeight);
+  FinalPage = new ResultPage(windowWidth, windowHeight, qrcode);
+
+  currentPage = QuestionPages[questionCount];
+}
+
+function draw(){
+  if (currentPage != null) currentPage.posIsSelectingInQuestionWindow(pos);
+  let status = currentPage.run();
+  // If status == -1, then keep drawing the page. 
+  if (status >= 0 && status <= 2) {
+    answers[questionCount] = status;
+    questionCount++;
+
+    if (questionCount == 5) {
+      $.ajax({
+        url: "/results?selection=" + answers,
+        type: "GET",
+        success: function (data) {
+          FinalPage.populate(data);
+        },
+        error: function (error) {
+          FinalPage.populate(["Encountered an error when", "connecting to the server."])
         }
-      } else if (status == -2) {
-        PausePage.reset();
-        currentPage = PausePage;
-      } else if (status == 3) {
-        currentPage = QuestionPages[questionCount];
-        currentPage.reset();
-      } else if (status == 4 || status == -3) {
-        window.location.href = "/"
-      }
-    
+      });
+      currentPage = FinalPage;
+    } else {
+      // Otherwise, move to the next page
+      currentPage = QuestionPages[questionCount]
     }
-    
-    function mouseMoved() {
-      if (currentPage != null) currentPage.mouseIsSelectingInQuestionWindow(pos, time_curr);
-    }
-  
+  } else if (status == -2) {
+    PausePage.reset();
+    currentPage = PausePage;
+  } else if (status == 3) {
+    currentPage = QuestionPages[questionCount];
+    currentPage.reset();
+  } else if (status == 4 || status == -3) {
+    window.location.href = "/"
+  }
+
+}  
