@@ -229,7 +229,7 @@ class ResultPage {
   draw() {
     background('#F2D4D6');
 
-    this.drawText("Result", this.canvasWidth / 2, this.canvasHeight / 20, 50, myFont);
+    this.drawText("Result", this.canvasWidth / 2, this.canvasHeight / 20, 50, 'Rockwell');
     this.drawText(this.fantext, this.canvasWidth / 2, this.canvasHeight/3 - 90, 40, 'Rockwell');
     this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 40, 40, 'Rockwell');
     this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 40, 'Rockwell');
@@ -317,13 +317,13 @@ class SelectPage {
   draw() {
     background('#F2D4D6');
     if (this.qnum == -3){
-      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40, myFont);
+      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40, 'Rockwell');
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40, 'Rockwell');
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 40, 'Rockwell');
       this.drawText("Move to the side of the option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 40, 'Rockwell');
       this.drawText("If no response, it will automatically end",this.canvasWidth /2, this.canvasHeight/3+10, 40, 'Rockwell');
     } else {
-      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50, myFont, myFont);
+      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50, 'Rockwell');
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50, 'Rockwell');
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4, 50, 'Rockwell');
     }
@@ -423,7 +423,7 @@ class SelectPage {
 
 function preload(){
   qrcode =loadImage("static/spotifyplaylist.png");
-  myFont =loadFont("static/TalkComic.ttf");
+  //myFont =loadFont("static/TalkComic.ttf");
 }
     
 function setup() {
