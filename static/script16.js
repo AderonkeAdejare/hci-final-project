@@ -429,7 +429,7 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  FirstPage = new SelectPage(-2, "What's AKW Listening To?", "Stay in the middle to begin", 1, ["Begin"], [5], windowWidth, windowHeight);
+  FirstPage = new SelectPage(-2, "What's AKW Listening To?", "Move to the middle to begin! Single player mode only.", 1, ["Begin"], [5], windowWidth, windowHeight);
   
   InstructPage = new SelectPage(-3, "Instruction", "To select the answer", 1, ["Continue"], [3], windowWidth, windowHeight);
 
