@@ -204,10 +204,10 @@ class ResultPage {
     this.counttext = data[1];
   }
   //writing any contents including title, timer and desc
-  drawText(content, xpos, ypos, ts, ft) {
+  drawText(content, xpos, ypos, ts) {
     fill(0);
     textAlign(CENTER, CENTER);
-    textFont(ft)
+    textFont('Rockwell')
     textSize(ts);
     text(content, xpos, ypos);
   }
@@ -229,12 +229,12 @@ class ResultPage {
   draw() {
     background('#F2D4D6');
 
-    this.drawText("Result", this.canvasWidth / 2, this.canvasHeight / 20, 50, 'Rockwell');
-    this.drawText(this.fantext, this.canvasWidth / 2, this.canvasHeight/3 - 90, 40, 'Rockwell');
-    this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 40, 40, 'Rockwell');
-    this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 40, 'Rockwell');
+    this.drawText("Result", this.canvasWidth / 2, this.canvasHeight / 20, 50);
+    this.drawText(this.fantext, this.canvasWidth / 2, this.canvasHeight/3 - 90, 40 );
+    this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 40, 40);
+    this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 40);
     image(qrcode,this.canvasWidth / 2 - 125, this.canvasHeight / 3 + 70, 250, 250);
-    this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 'Rockwell');
+    this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
   }
 
   update() {
@@ -292,11 +292,11 @@ class SelectPage {
     this.timer = timerLength;
   }
   //writing any contents including title, timer and desc
-  drawText(content, xpos, ypos, ts, ft) {
+  drawText(content, xpos, ypos, ts) {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(ts);
-    textFont(ft);
+    textFont('Rockwell');
     text(content, xpos, ypos);
   }
   
@@ -317,15 +317,15 @@ class SelectPage {
   draw() {
     background('#F2D4D6');
     if (this.qnum == -3){
-      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40, 'Rockwell');
-      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40, 'Rockwell');
-      this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 40, 'Rockwell');
-      this.drawText("Move to the side of the option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 40, 'Rockwell');
-      this.drawText("If no response, it will automatically end",this.canvasWidth /2, this.canvasHeight/3+10, 40, 'Rockwell');
+      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40);
+      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40);
+      this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 40);
+      this.drawText("Move to the side of the option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 40);
+      this.drawText("If no response, it will automatically end",this.canvasWidth /2, this.canvasHeight/3+10, 40);
     } else {
-      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50, 'Rockwell');
-      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50, 'Rockwell');
-      this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4, 50, 'Rockwell');
+      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
+      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
+      this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4, 50);
     }
   
     // Draw answer rectangle 
