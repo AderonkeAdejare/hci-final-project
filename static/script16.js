@@ -6,7 +6,7 @@ let pos = "0";
 /////////////////////////////
 // Adapted from https://p5js.org/examples/interaction-snake-game.html
 //
-var host = "localhost:4444";
+var host = "cpsc484-01.yale.internal:8888";
 $(document).ready(function() {
   frames.start();
   twod.start();
@@ -77,12 +77,6 @@ var frames = {
 
     // Normalize by subtracting the root (pelvis) joint coordinates
     var pelvis_x = frame.people[0].joints[0].position.x * -1;
-    var pelvis_y = frame.people[0].joints[0].position.y * -1;
-    var pelvis_z = frame.people[0].joints[0].position.z * -1;
-
-    // if (pelvis_z < 100) {
-    //   return command;
-    // }
 
     if (pelvis_x < -600) {
       command = direction.LEFT; // LEFT
@@ -315,7 +309,7 @@ class SelectPage {
   }
   
   draw() {
-    background('#F2D4D6');
+    background('#ADD8E6');
     if (this.qnum == -3){
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40);
@@ -366,20 +360,7 @@ class SelectPage {
     circle(mouseX, mouseY, 30);
     return this.update();
   }
-  //maybe not needed when we using motion capturing. 
-  // isMouseWithin(pos, boxXPos, boxYPos, boxWidth, boxHeight) {
-  //     if (pos == "LEFT")
-  //   if (mouseXPos > boxXPos - 10 && 
-  //       mouseXPos < boxXPos + boxWidth + 10 && 
-  //       mouseYPos > boxYPos - 10 && 
-  //       mouseYPos < boxYPos + boxHeight + 10) return true;
-  //   return false;
-  // }
   
-  
-  // In Question Window, detect if mouse is seleting a box
-  // later, mouseXPos, mouseYPos will be replaced with motion (left middle right), 
-  //this.THREEBOX.xxxx.XPOS, this.THREEBOX.Lxxxx.YPOS, QBoxXSize, QBoxYSize will be replaced with THREEBOX.xxxx()
   posIsSelectingInQuestionWindow(pos) {
     let prevSelection = this.selectedRect;
     if (this.boxCount == 3) {
@@ -423,7 +404,6 @@ class SelectPage {
 
 function preload(){
   qrcode =loadImage("static/spotifyplaylist.png");
-  //myFont =loadFont("static/TalkComic.ttf");
 }
     
 function setup() {
@@ -445,7 +425,6 @@ function setup() {
   FinalPage = new ResultPage(windowWidth, windowHeight, qrcode);
 
   currentPage = FirstPage;
-  //currentPage = QuestionPages[questionCount];
 }
 
 function draw(){
