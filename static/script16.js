@@ -78,13 +78,13 @@ var frames = {
     // Normalize by subtracting the root (pelvis) joint coordinates
     var pelvis_x = frame.people[0].joints[0].position.x * -1;
 
-    if (pelvis_x < -600) {
+    if (pelvis_x < -700) {
       command = direction.LEFT; // LEFT
     }
-    else if (pelvis_x > 200) {
+    else if (pelvis_x > 0) {
       command = direction.RIGHT; // RIGHT
     }
-    else if (pelvis_x > -600 && pelvis_x < 200) {
+    else if (pelvis_x > -700 && pelvis_x < 0) {
       command = direction.MIDDLE; // MIDDLE
     }
     
