@@ -426,11 +426,11 @@ function setup() {
 
   FirstPage = new SelectPage(-4, "What's AKW Listening To?", "Move to the Middle to Begin!", 1, ["Begin"], [5], windowWidth, windowHeight);
   
-  InstructPage = new SelectPage(-3, "Instruction", "To Select the Answer", 1, ["Continue"], [6], windowWidth, windowHeight);
+  InstructPage = new SelectPage(-3, "Instructions", "To Select the Answer", 1, ["Continue"], [6], windowWidth, windowHeight);
 
   QuestionPages = [];
   for (let i = 0; i < 5; i++) {
-    QuestionPages[i] = new SelectPage(i + 1, "Question" + (i + 1), questionText[i], 
+    QuestionPages[i] = new SelectPage(i + 1, "Question " + (i + 1) + "/5", questionText[i], 
     3, [option1[i], option2[i], option3[i]], [0, 1, 2],
     windowWidth, windowHeight);
   }
