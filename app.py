@@ -2,7 +2,7 @@
 import os
 import time
 
-from flask import Flask, flash, redirect, render_template, request, session, jsonify
+from flask import Flask, render_template, request, session, jsonify
 import random
 
 # Configure application
@@ -17,19 +17,19 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 @app.route("/")
 def index():
       session.clear()
-      return render_template("index.html")
-
-@app.route("/instructions")
-def instructions():
-      return render_template("instructions.html")
-
-@app.route("/pause")
-def pause():
-      return render_template("pause.html")
-
-@app.route("/questions")
-def questions():
       return render_template("questions.html")
+
+# @app.route("/instructions")
+# def instructions():
+#       return render_template("instructions.html")
+
+# @app.route("/pause")
+# def pause():
+#       return render_template("pause.html")
+
+# @app.route("/questions")
+# def questions():
+#       return render_template("questions.html")
 
 @app.route("/results", methods=["GET", "POST"])
 def results():

@@ -1,18 +1,19 @@
 // https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
 //https://www.youtube.com/watch?v=exRAM1ZWm_s
-
-let pos = "0";
-  
 /////////////////////////////
 // Adapted from https://p5js.org/examples/interaction-snake-game.html
 //
+
+
+var  bodyPos = null;
+//var host = "localhost:4444";
 var host = "cpsc484-01.yale.internal:8888";
 $(document).ready(function() {
   frames.start();
   twod.start();
 });
 
-const direction = {
+const Cdirection = {
   LEFT: "LEFT",
   RIGHT: "RIGHT",
   MIDDLE: "MIDDLE"
@@ -36,16 +37,16 @@ var frames = {
       if (command !== null) {
         var timestamp = frames.get_timestamp(JSON.parse(event.data));
         counter += 1;
-        if (command == direction.LEFT) {
-          pos="LEFT";
+        if (command == Cdirection.LEFT) {
+          bodyPos="LEFT";
           locations.push("LEFT");
         }
-        else if (command == direction.RIGHT) {
-          pos="RIGHT";
+        else if (command == Cdirection.RIGHT) {
+          bodyPos="RIGHT";
           locations.push("RIGHT");
         }
-        else if (command == direction.MIDDLE) {
-          pos="MIDDLE";
+        else if (command == Cdirection.MIDDLE) {
+          bodyPos="MIDDLE";
           locations.push("MIDDLE");
         }
         
@@ -79,13 +80,13 @@ var frames = {
     var pelvis_x = frame.people[0].joints[0].position.x * -1;
 
     if (pelvis_x < -650) {
-      command = direction.LEFT; // LEFT
+      command = Cdirection.LEFT; // LEFT
     }
     else if (pelvis_x > 0) {
-      command = direction.RIGHT; // RIGHT
+      command = Cdirection.RIGHT; // RIGHT
     }
     else if (pelvis_x > -650 && pelvis_x < 0) {
-      command = direction.MIDDLE; // MIDDLE
+      command = Cdirection.MIDDLE; // MIDDLE
     }
     
     return command;
@@ -201,7 +202,7 @@ class ResultPage {
   drawText(content, xpos, ypos, ts) {
     fill(0);
     textAlign(CENTER, CENTER);
-    textFont('Rockwell')
+    textFont('Lato')
     textSize(ts);
     text(content, xpos, ypos);
   }
@@ -221,14 +222,14 @@ class ResultPage {
   }
   
   draw() {
-    background('#F2D4D6');
+    background('#ADD8E6');
 
     this.drawText("Result", this.canvasWidth / 2, this.canvasHeight / 20, 50);
     this.drawText(this.fantext, this.canvasWidth / 2, this.canvasHeight/3 - 90, 40 );
     this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 40, 40);
     this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 40);
     image(qrcode,this.canvasWidth / 2 - 125, this.canvasHeight / 3 + 70, 250, 250);
-    this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
+    this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40);
   }
 
   update() {
@@ -245,7 +246,7 @@ class ResultPage {
     return this.update();
   }
 
-  posIsSelectingInQuestionWindow(pos) {
+  posIsSelectingInQuestionWindow(bodyPos) {
     //nothing there
   }
 }
@@ -290,8 +291,11 @@ class SelectPage {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(ts);
-    textFont('Rockwell');
+    textFont('Lato');
     text(content, xpos, ypos);
+    // if (content == this.title){
+    //   textStyle(BOLD);
+    // }
   }
   
   drawQuestionBox(selected, content, xpos, ypos) {
@@ -315,12 +319,12 @@ class SelectPage {
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 40);
       this.drawText("Move to the Side of the Option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 40);
-      this.drawText("If No Response, It will Automatically End",this.canvasWidth /2, this.canvasHeight/3+10, 40);
+      this.drawText("If No Response, It will automatically End",this.canvasWidth /2, this.canvasHeight/3+10, 40);
     } else if (this.qnum == -4){
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 40);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 40);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 40);
-      this.drawText("Single Player Mode Only.",this.canvasWidth /2, this.canvasHeight/3-40, 40);
+      this.drawText("Single Player Mode Only",this.canvasWidth /2, this.canvasHeight/3-40, 40);
     }
     else {
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
@@ -351,7 +355,9 @@ class SelectPage {
     // 1. Move onto the next question
     if(this.hoverTime >= HOVERTHRESHOLD * 60) return this.selectedRect;
 
-    if (this.timer <= 0 && this.boxCount ==2) return -2;
+    if (this.timer <= 0 && this.boxCount == 3) return -2;
+
+    if (this.timer <= 0 && this.qnum ==-2) return -3;
 
     if (this.timer <= 0 && this.qnum ==-3) return 3;
 
@@ -367,39 +373,39 @@ class SelectPage {
     return this.update();
   }
   
-  posIsSelectingInQuestionWindow(pos) {
+  posIsSelectingInQuestionWindow(bodyPos) {
     let prevSelection = this.selectedRect;
     if (this.boxCount == 3) {
-      // if (this.isMouseWithin(pos, this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS, QBoxXSize, QBoxYSize)) 
-      if (pos == null) {
+      // if (this.isMouseWithin(bodyPos, this.THREEBOX.LEFT.XbodyPos, this.THREEBOX.LEFT.YbodyPos, QBoxXSize, QBoxYSize)) 
+      if (bodyPos == null) {
           this.selectedRect = -1; // not selecting
       }
-      else if (pos == direction.LEFT) {
+      else if (bodyPos == Cdirection.LEFT) {
           this.selectedRect = this.optionIndices[0]; //0
       }
-      else if (pos == direction.MIDDLE) {
+      else if (bodyPos == Cdirection.MIDDLE) {
           this.selectedRect = this.optionIndices[1]; //1
       }
-      else if (pos == direction.RIGHT) {
+      else if (bodyPos == Cdirection.RIGHT) {
           this.selectedRect = this.optionIndices[2]; //2
       }
 
     } else if (this.boxCount == 2) {
-        if (pos == null) {
+        if (bodyPos == null) {
           this.selectedRect = -1; // not selecting
         }
-        else if (pos == direction.LEFT) {
+        else if (bodyPos == Cdirection.LEFT) {
           this.selectedRect = this.optionIndices[0];
         }
-        else if (pos == direction.RIGHT) {
+        else if (bodyPos == Cdirection.RIGHT) {
           this.selectedRect = this.optionIndices[1];
         }
     //in case I need to use one box; currently not using it; 
     } else if (this.boxCount == 1) {
-        if (pos == null) {
+        if (bodyPos == null) {
           this.selectedRect = -1;
         }
-        else if (pos == direction.RIGHT) {
+        else if (bodyPos == Cdirection.RIGHT) {
           this.selectedRect = this.optionIndices[0];
         }
     }
@@ -417,7 +423,7 @@ function setup() {
 
   FirstPage = new SelectPage(-4, "What's AKW Listening To?", "Move to the Middle to Begin!", 1, ["Begin"], [5], windowWidth, windowHeight);
   
-  InstructPage = new SelectPage(-3, "Instruction", "To Select the Answer", 1, ["Continue"], [3], windowWidth, windowHeight);
+  InstructPage = new SelectPage(-3, "Instruction", "To Select the Answer", 1, ["Continue"], [6], windowWidth, windowHeight);
 
   QuestionPages = [];
   for (let i = 0; i < 5; i++) {
@@ -434,7 +440,7 @@ function setup() {
 }
 
 function draw(){
-  if (currentPage != null) currentPage.posIsSelectingInQuestionWindow(pos);
+  if (currentPage != null) currentPage.posIsSelectingInQuestionWindow(bodyPos);
   let status = currentPage.run();
   // If status == -1, then keep drawing the page. 
   if (status >= 0 && status <= 2) {
@@ -465,13 +471,16 @@ function draw(){
     currentPage.reset();
   } else if (status == 4 || status == -3) {
     //window.location.href = "/"
+    FirstPage.reset()
     currentPage=FirstPage;
-    currentPage.reset();
   } else if(status == 5){
+    InstructPage.reset()
     currentPage=InstructPage;
+  } else if(status == 6){
+    questionCount=0;
+    currentPage=QuestionPages[questionCount];
+    currentPage.reset();
   }
-  
-
 }  
 //currenpage.run return 
 //0, 1, 2 ==> selectedRect
@@ -482,4 +491,4 @@ function draw(){
 //-3 ---> result page time's up--> coming back to the index
 //4 ---> puase time up 
 //instuction ==> move question ==>
-//going to the instruction page
+//5going to the instruction page
