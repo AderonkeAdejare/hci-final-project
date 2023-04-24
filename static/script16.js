@@ -1,7 +1,7 @@
 // https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
 //https://www.youtube.com/watch?v=exRAM1ZWm_s
 
-let pos = "0";
+pos = "0";
   
 /////////////////////////////
 // Adapted from https://p5js.org/examples/interaction-snake-game.html
@@ -122,7 +122,7 @@ const pages = {
   const timerLength = 30;
   const QBoxXSize = 250;
   const QBoxYSize = 100;
-  const HOVERTHRESHOLD = 3.0;
+  const HOVERTHRESHOLD = 5.0;
   const FRAMESECOND = 60;
   
   // Initialized in the SetupFunction
@@ -201,8 +201,8 @@ class ResultPage {
   drawText(content, xpos, ypos, ts) {
     fill(0);
     textAlign(CENTER, CENTER);
-    textFont('Rockwell')
-    textSize(ts);
+    textFont('Rockwell'); 
+    textSize(ts); // 
     text(content, xpos, ypos);
   }
   
@@ -461,7 +461,7 @@ function draw(){
     PausePage.reset();
     currentPage = PausePage;
   } else if (status == 3) {
-    currentPage = QuestionPages[questionCount];
+    currentPage = QuestionPages[questionCount]; // error: Cannot read property of undefined. Check the line number in error and make sure the variable which is being operated is not undefined.
     currentPage.reset();
   } else if (status == 4 || status == -3) {
     //window.location.href = "/"

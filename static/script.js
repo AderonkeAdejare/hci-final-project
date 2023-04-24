@@ -120,7 +120,7 @@ class ResultPage {
     this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 40, 40);
     this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 40);
     image(qrcode,this.canvasWidth / 2 - 125, this.canvasHeight / 3 + 70, 250, 250);
-    this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
+    this.drawText("This game will restart in " + this.timer + " seconds", this.canvasWidth / 2, this.canvasHeight - 100);
   }
 
   update() {
