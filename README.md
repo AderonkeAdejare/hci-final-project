@@ -18,4 +18,4 @@ Since we are using pelvic joint data in our project, the users need to be standi
 
 
 
-Brief description of the project and user tasks the installation addresses: this project is a music quiz in single player mode, where participants answer questions related to music, favorite computer science class, and other random questions. 
+Brief description of the project and user tasks the installation addresses: this project is a music quiz in single player mode, where participants answer questions related to music, favorite computer science class, and other random questions. After each question, the user is able to move on to the next question.
