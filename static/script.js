@@ -171,6 +171,10 @@ class SelectPage {
         YPOS: canvasHeight/2
       }
     };
+
+    // navigation buttons - forward, backward, pause, instructions
+    var forward = document.createElementNS("http://www.w3.org/2000/svg",'bi-arrow-right-circle');
+
   }
 
   reset() {
@@ -205,7 +209,7 @@ class SelectPage {
     this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100);
     this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4);
     
-    // Draw answer rectangle (for queston pages)
+    // Draw answer rectangle (for question pages)
     if (this.boxCount == 3) {
       this.drawQuestionBox(this.selectedRect == this.optionIndices[0], this.options[0], this.THREEBOX.LEFT.XPOS, this.THREEBOX.LEFT.YPOS);
       this.drawQuestionBox(this.selectedRect == this.optionIndices[1], this.options[1], this.THREEBOX.MIDDLE.XPOS, this.THREEBOX.MIDDLE.YPOS);

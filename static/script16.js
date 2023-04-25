@@ -156,7 +156,8 @@ const pages = {
   
   let option2=
     ["The Good Life Center", 
-    "Commons", "A few stickers", 
+    "Commons",
+    "A few stickers", 
     "Neutral", 
     "CPSC 484:HCI"]
   
@@ -306,7 +307,7 @@ class SelectPage {
       else fill('#213F99');
       rect(xpos, ypos, QBoxXSize, QBoxYSize);
       noStroke();
-  
+   
       // Write text
       fill(255);
       textSize(20);
