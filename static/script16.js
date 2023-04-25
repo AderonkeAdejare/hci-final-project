@@ -1,9 +1,8 @@
 // https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
 //https://www.youtube.com/watch?v=exRAM1ZWm_s
 
-pos = "0";
-  
-/////////////////////////////
+//pos = "0";  
+/************************* LIST OF CONSTANTS *****************************/
 // Adapted from https://p5js.org/examples/interaction-snake-game.html
 //
 
