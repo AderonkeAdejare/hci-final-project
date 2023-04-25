@@ -125,7 +125,7 @@ const pages = {
   const timerLength = 30;
   const QBoxXSize = 500;
   const QBoxYSize = 200;
-  const HOVERTHRESHOLD = 5.0;
+  const HOVERTHRESHOLD = 4.0;
   const FRAMESECOND = 60;
   
   // Initialized in the SetupFunction
