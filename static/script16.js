@@ -310,7 +310,7 @@ class SelectPage {
    
       // Write text
       fill(255);
-      textSize(20);
+      textSize(40);
       textAlign(CENTER, CENTER);
       text(content, xpos+QBoxXSize/2, ypos+QBoxYSize/2);
   }
@@ -319,7 +319,7 @@ class SelectPage {
     background('#ADD8E6');
     if (this.qnum == -3){
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
-      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
+      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 90, 50);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 50);
       this.drawText("Move to the Side of the Option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 50);
       this.drawText("If No Response, It will automatically End",this.canvasWidth /2, this.canvasHeight/3+10, 50);
