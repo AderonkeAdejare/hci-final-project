@@ -231,7 +231,7 @@ class ResultPage {
     this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 50);
     this.drawText(this.fantext, this.canvasWidth / 2, this.canvasHeight/3 - 100, 50 );
     this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 50, 50);
-    image(qrcode,this.canvasWidth / 2-125, this.canvasHeight / 3 + 70, 500, 500);
+    image(qrcode,this.canvasWidth/2-250, this.canvasHeight / 3 + 70, 500, 500);
     this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
   }
 

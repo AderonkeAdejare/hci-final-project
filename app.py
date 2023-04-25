@@ -1,6 +1,5 @@
 # Python file for Flask 
 import os
-import time
 
 from flask import Flask, render_template, request, session, jsonify
 import random
@@ -77,3 +76,4 @@ for code in default_exceptions:
  """
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port="9999")
+   

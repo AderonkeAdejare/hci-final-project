@@ -1,44 +1,38 @@
-The group finalizes the design and implementation of their prototype system. The group submits their final code as a zip file to Gradescope such that the corresponding teaching staff can upload the latest version to the TV setup before live project demos.
+Usage and Dependency Instructions: 
+To see the project the way it actually appears on the display, you can see the version that’s running on TV1 in AKW by going to this link: http://cpsc484-01.yale.internal:8888/?project=hci-final-project 
+To run the project locally, you should first download the zip file containing our code. After unzipping and navigating to that location in your terminal, you can use the following command: python app.py. Make sure that if you are using that command, that you are in the hci-final-project directory (which should have been created after unzipping). Running that command will produce a series of lines of text on the terminal window, ultimately providing a statement that says “Running on….” with a URL that you can paste into your browser. Continuing to interact with the game will require you to be in front of TV1 at AKW. 
 
-This assignment will be evaluated based on:
-a) Whether the code can run on the display (1 pts)
-b) The system prototype addresses the group’s two tasks from Assignment 5 (2 pts per task; 4 pts)
+To install dependencies, run pipenv install [name of dependency]. When our group was implementing this project, a couple of dependencies we had to install ourselves were tornado and flask. Additionally, some of us had to use the following commands: pip install --upgrade --user pyqtwebengine==5.12 and pip install --upgrade --user pyqt5==5.12 in order to fix dependency issues. Additionally, you may need to run pip install -r requirements.txt. The requirements.txt file contains all Python dependencies necessary to run our project. 
 
-c) The code includes a README text file that explains how to install any dependencies and run the project (2 pts), provides a brief description of the project and what tasks the installation addresses (1 pts), indicates explicitly if there are any constraints from the deployment environment (0.5 pts), and includes a collaboration record that specifies what each team member contributed to the prototype (1.5 pts).
+Project Description and Tasks Addressed:
+This project is a music taste quiz in single player mode, where participants answer questions related to music, favorite computer science class, and other random questions. To select an answer, the user has to move their body to the side of one of the three options they want to select for five seconds. If the user is not responsive to an answer or no user is detected in the middle of the quiz, the quiz automatically pauses and provides the user 30 seconds to resume activity. If a user is still not responsive, the game automatically resets to the home screen. At the end of the quiz, the user is given their favorite genre of music (e.g. pop), information on how many other “AKWers” have the same music taste, and a QR code that can be scanned to add a song of their choice in that genre to a community Spotify playlist. The installation addresses the following user tasks:
+Being able to express shared interests with others/share their music preferences with one another: this is achieved in our project through the Spotify community playlist, where users can add a song to the playlist after getting the results from their quiz, where a user can scan the QR code provided to access the shared playlist. 
+Expressing identity while maintaining privacy: Users can select answers that reflect their opinions without ever submitting their name, the number of people who have the same music taste as them, spotify playlist collaboration also lends itself to privacy while being able to share music with people as a part of their identity, users can select answers that reflect their opinions. 
 
-By including constraints from the deployment environment in the README, we mean that the text file should explain any physical constraints that are important to consider when the course staff evaluates the system prototype. For instance, would users need to be able to stand at least a minimum distance away from the Kinect for the application to run as intended?
+NOTE: These tasks are not the same ones from Assignment 5, as we misinterpreted that assignment and provided tasks that were not user-specific and very solution-oriented. However, we wanted to note that we were successful in accomplishing those implementation-related tasks and went back to a previous assignment to record the above tasks (that we believe our implementation and project design address). 
 
-Worth noting, Python projects must be implemented such that they can run in a virtual environment. These projects need to include in the source code a requirements.txt file that includes all Python dependencies (so that they can be instealled with pip as pip install -r requirements.txt).
+If we had more time….
+In order to enable the users to have the freedom to navigate through the system at their own pace, we wanted to implement back and forward buttons for the user to control. We got this idea after analyzing the results of one of our heuristic evaluations in a previous assignment. That way, the user could go back to a previous question (raising left hand over back button for 3 seconds) or move on to next question (raising right hand over forward button for 3 seconds). Additionally, we wanted to use progress bars to indicate a user’s progress through our quiz - instead, we simplified this design and indicated progress by showing “Question 1/5", or “Question 4/5"  
+Automatically adding to the spotify playlist (instead of manual user additions). This functionality would have touched on Nielsen’s heuristic of flexibility/efficiency of use, since a repeated task of adding a song to the playlist would be automated and create less work for the user. 
+Double player mode - this was part of our original design, but we (sadly) weren’t able to get to it with the time constraints on hand. If we had been able to implement it, though, we think it would add to our existing task of expressing shared interests with others (since standing next to someone while playing a game would foster conversations about music taste, etc.!)
 
-Usage Instructions:
+Constraints in the Deployment Environment:
+Physical Constraints: Since we are using pelvic joint data in our project, the users need to be standing ~6 feet away from the display so that their pelvic joint is detected by the Kinect sensor.
 
-Physical Constraints:
-Since we are using pelvic joint data in our project, the users need to be standing ~6 feet away from the display so that their pelvic joint is detected by the Kinect sensor. 
+Specifically with the location of TV1 in AKW, there is a cement wall on the right side of the display that can obstruct users’ range of motion. Since our implementation depends on users moving to the left, right, or middle in what feels like an “intuitive” way, we addressed this in calibrating the values of the sensor data. However, we felt that this is still worth noting as a constraint from the deployment environment (that the user hopefully doesn’t have to think much about). 
 
+We also found an additional constraint which involves the possibility of capturing the movement of a person passing by the display alongside the player, rather than the intended player's motion. As a result, it is very helpful for the background (behind the player) to be cleared while a user is interacting with our project. 
 
-PART A 
+Collaboration Record:
+Student Name and NetID: Aderonke Adejare, aoa35
+Contribution: 
+I worked on implementing the navigation icons into the front end of the project using Bootstrap Icons.  However, since our program ended up running on one HTML page and we did not have time to implement the back end to control forward and backward buttons, that adapted part of the project was scrapped.  I went to the meetings on 4/17 and 4/20 check-in meetings.  I was able to attend the Saturday, 4/22 meeting, where I helped Cesar merge his code into the main code and we were able to debug some errors with the CSS.  Although I could not attend the Sunday, 4/23 meeting, on Monday, 4/24, I went to the display to test our code and debug console errors. I also went to Nathan’s office hours that day to ensure we had all the required files for our program to work on the display. During 4/25 class, I helped test out the program by being the test subject for the demo.  I helped write up the README by creating and sharing a doc with my teammates and talking with them about what we should include.  After class time, I stayed behind with Cesar and Inyoung to put the final touches on our project, including adapting the size of elements in our project to fit the TV size and trying to center parts of the code.  I want to thank my teammates for accommodating me during this process because of my concussion and for being hard-working people. 
 
+Student Name and NetID: Ananya Rajagopalan, asr94
+Contribution: I worked on implementing the motion detection javascript component (interact.js, later copied into script16.js) in the back end of our project, and integrating the motion detection with the rest of our project’s navigation (replacing “mouse clicks” with actual motion to navigate through the game and subsequent debugging). This involved detecting which section of the screen a user was standing in, and determining how long they had been in that position (and returning both location and timestamps accordingly). I fully attended meetings on 4/17, 4/20, 4/22 and 4/23 in order to touch base with my team and continue working on the project. Additionally, I stayed after the meeting finished on 4/22 to debug an issue with our code so that the motion detection was working better. I also helped with the results component of the project by creating the QR code that takes users to a collaborative Spotify playlist. During our latest work session on 4/25, I worked with Inyoung to debug some small formatting issues with the display. I’m thankful to all of my teammates for consistent communication in keeping each other on the same page during our individual work.
 
-PART B
+Student Name and NetID: Inyoung Shin(is485)
+Contribution: In collaboration with Ronke, I began building the interface structure using HTML supported by JavaScript and Python Flask. I focused on creating the sections that display questions, obtain user responses through mouse hover, and present final results. To accomplish this, I utilized the p5.js library and coded the program using JavaScript. I kept the other team members up-to-date on my progress and continually discussed how my work could be merged with theirs. I was present for all group meetings, both in-person and on Zoom on 4/17, 4/20, 4/22 and 4/23. Thanks to the p5.js library, we were able to incorporate it into all pages, including the first page, instructional pages, and the pause stage of the interface. I collaborated with Ronke and Cesar to create the first , the pause page, and instructional pages of the interface. During the last weekend, all members met in person to integrate the motion capture function that Ananya and Cesar had worked on. While other members conducted tests, I helped debugging the program and fixing any issues. On April 25th, in particular, all members of the group collaborated to add the final touches to our program. I am grateful that each member dedicated themselves to working tirelessly up until the final minutes to ensure the project's completion.
 
-
-
-
-PART C
-
-
-
-
-
-
-
-
-Collaboration Record: 
-
-
-Inyoung Shin(is485): In collaboration with Ronke, I began building the interface structure using HTML supported by JavaScript and Python Flask. I focused on creating the sections that display questions, obtain user responses through mouse hover, and present final results. To accomplish this, I utilized the p5.js library and coded the program using JavaScript. I kept the other team members up-to-date on my progress and continually discussed how my work could be merged with theirs. I was present for all group meetings, both in-person and on Zoom. Thanks to the p5.js library, we were able to incorporate it into all pages, including the first page, instructional pages, and the pause stage of the interface. I collaborated with Ronke and Cesar to create the first , the pause page, instructional pages of the interface. During the last weekend, all members met in person to integrate the motion capture function that Anany and Cesar had worked on. While other members conducted tests, I aided in debugging the program and fixing any issues.
-
-Cesar Lara (cl2329): 
-
-
-
+Student Name and NetID: Cesar Lara, cl2329
+Contribution: I worked on the css portion of the project by implementing a timer and adding stylistic style to the html pages of the program while following Nielsen’s ten Heuristics. I also adjusted the body movement tracking in our script16.js file in order to determine when the user is choosing the left option, middle option, or right option. I had to adjust the work I did relating to the CSS since my team found it more efficient to use one Javascript file. I changed the dimensions of the box sizes for each question and the size of the QR code (made it bigger) so that users didn’t have challenges in scanning it. I attended all meetings for the full duration (including 4/17, 4/20, 4/22, and 4/23) and while in these meetings, I also helped test out some of the program by accurately determining how many feet the user should stand before beginning our quiz game and the coordinates to determine the left, middle, and right positions. I kept consistent communication with my team members about the changes I committed in order to avoid any confusion. I am grateful for all of my teammates and shout out to Aderonke for working with me in debugging some of the HTML pages and going to office hours with Nathan in order to sort this out! I truly learned a lot from this process and project and I felt challenged to learn new skills (specifically, how the body tracking system works in relation to our project).
