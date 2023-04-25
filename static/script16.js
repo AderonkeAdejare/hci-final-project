@@ -245,7 +245,7 @@ class ResultPage {
   run() {
     this.draw();
     //it will remove eventually
-    circle(mouseX, mouseY, 30);
+    //circle(mouseX, mouseY, 30);
     return this.update();
   }
 
@@ -372,7 +372,7 @@ class SelectPage {
   run() {
     this.draw();
     //it will remove eventually/ 
-    circle(mouseX, mouseY, 30);
+    //circle(mouseX, mouseY, 30);
     return this.update();
   }
   
