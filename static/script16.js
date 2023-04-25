@@ -228,10 +228,10 @@ class ResultPage {
     background('#ADD8E6');
 
     this.drawText("Result", this.canvasWidth / 2, this.canvasHeight / 20, 60);
+    this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 50);
     this.drawText(this.fantext, this.canvasWidth / 2, this.canvasHeight/3 - 90, 50 );
     this.drawText(this.counttext, this.canvasWidth / 2, this.canvasHeight/3 - 40, 50);
-    this.drawText("Check out the playlist, 'What's AKW Listening To?'", this.canvasWidth / 2, this.canvasHeight/3 + 10, 50);
-    image(qrcode,this.canvasWidth / 2 - 100, this.canvasHeight / 3 + 70, 500, 500);
+    image(qrcode,this.canvasWidth / 2 - 150, this.canvasHeight / 3 + 70, 500, 500);
     this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
   }
 
@@ -321,16 +321,20 @@ class SelectPage {
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 90, 50);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 50);
-      this.drawText("Move to the Side of Your Favorite Option for 4 seconds.",this.canvasWidth /2, this.canvasHeight/3-40, 50);
-      this.drawText("If you don't respond within 30 seconds, the game will pause.",this.canvasWidth /2, this.canvasHeight/3+10, 50);
-      this.drawText("If the game is paused for 30 seconds, it will end and return to the home page.",this.canvasWidth /2, this.canvasHeight/3+60, 50);
+      this.drawText("Move to the Side of Your Favorite Option for 4 seconds.",this.canvasWidth /2, this.canvasHeight/3-30, 50);
+      this.drawText("The Game Will Pause After 30 seconds,",this.canvasWidth /2, this.canvasHeight/3+30, 50);
+      
     } else if (this.qnum == -4){
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 50);
       this.drawText("Single Player Mode Only",this.canvasWidth /2, this.canvasHeight/3-40, 50);
-    }
-    else {
+    } else if (this.qnum == -2){
+      this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
+      this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
+      this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 50);
+      this.drawText("The Game Will Restart in 30 Seconds",this.canvasWidth /2, this.canvasHeight/3-40, 50);
+    }else {
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 60);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 60);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/4, 60);
@@ -357,7 +361,11 @@ class SelectPage {
 
     // Based on counters, change page state.
     // 1. Move onto the next question
-    if(this.hoverTime >= HOVERTHRESHOLD * 60) return this.selectedRect;
+    if(this.hoverTime >= 7 * 60 && this.qnum ==-3){
+      return this.selectedRect;
+    }else if(this.hoverTime >= HOVERTHRESHOLD * 60) {
+      return this.selectedRect;
+    }
 
     if (this.timer <= 0 && this.boxCount == 3) return -2;
 
