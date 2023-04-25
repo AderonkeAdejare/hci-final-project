@@ -123,8 +123,8 @@ const pages = {
   };
   
   const timerLength = 30;
-  const QBoxXSize = 250;
-  const QBoxYSize = 100;
+  const QBoxXSize = 500;
+  const QBoxYSize = 200;
   const HOVERTHRESHOLD = 5.0;
   const FRAMESECOND = 60;
   
