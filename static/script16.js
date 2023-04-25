@@ -8,8 +8,8 @@
 
 
 var  bodyPos = null;
-var host = "localhost:4444";
-//var host = "cpsc484-01.yale.internal:8888";
+//var host = "localhost:4444";
+var host = "cpsc484-01.yale.internal:8888";
 $(document).ready(function() {
   frames.start();
   twod.start();
