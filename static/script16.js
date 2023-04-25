@@ -205,7 +205,7 @@ class ResultPage {
   drawText(content, xpos, ypos, ts) {
     fill(0);
     textAlign(CENTER, CENTER);
-    textFont('Verdana')
+    textFont(myFont)
     textSize(ts);
     text(content, xpos, ypos);
   }
@@ -294,7 +294,7 @@ class SelectPage {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(ts);
-    textFont('Verdana');
+    textFont(myFont);
     text(content, xpos, ypos);
     // if (content == this.title){
     //   textStyle(BOLD);
@@ -321,8 +321,9 @@ class SelectPage {
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 90, 50);
       this.drawText(this.desc, this.canvasWidth / 2, this.canvasHeight/3-90, 50);
-      this.drawText("Move to the Side of the Option for 3 sec",this.canvasWidth /2, this.canvasHeight/3-40, 50);
-      this.drawText("If No Response, It will automatically End",this.canvasWidth /2, this.canvasHeight/3+10, 50);
+      this.drawText("Move to the Side of Your Favorite Option for 4 seconds.",this.canvasWidth /2, this.canvasHeight/3-40, 50);
+      this.drawText("If you don't respond within 30 seconds, the game will pause.",this.canvasWidth /2, this.canvasHeight/3+10, 50);
+      this.drawText("If the game is paused for 30 seconds, it will end and return to the home page.",this.canvasWidth /2, this.canvasHeight/3+60, 50);
     } else if (this.qnum == -4){
       this.drawText(this.title, this.canvasWidth / 2, this.canvasHeight / 20, 50);
       this.drawText(this.timer, this.canvasWidth / 2, this.canvasHeight - 100, 50);
@@ -419,6 +420,8 @@ class SelectPage {
 
 function preload(){
   qrcode =loadImage("static/spotifyplaylist.png");
+  myFont= loadFont("static/Roboto-Regular.ttf");
+
 }
     
 function setup() {
