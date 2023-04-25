@@ -41,5 +41,7 @@ Collaboration Record:
 
 Inyoung Shin(is485): In collaboration with Ronke, I began building the interface structure using HTML supported by JavaScript and Python Flask. I focused on creating the sections that display questions, obtain user responses through mouse hover, and present final results. To accomplish this, I utilized the p5.js library and coded the program using JavaScript. I kept the other team members up-to-date on my progress and continually discussed how my work could be merged with theirs. I was present for all group meetings, both in-person and on Zoom. Thanks to the p5.js library, we were able to incorporate it into all pages, including the first page, instructional pages, and the pause stage of the interface. I collaborated with Ronke and Cesar to create the first , the pause page, instructional pages of the interface. During the last weekend, all members met in person to integrate the motion capture function that Anany and Cesar had worked on. While other members conducted tests, I aided in debugging the program and fixing any issues.
 
+Cesar Lara (cl2329): 
+
 
 
