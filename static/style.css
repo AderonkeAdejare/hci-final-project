@@ -66,4 +66,10 @@ button:hover {
   margin: 0 20px;
 }
 
+#defaultCanvas0 {
+  position: absolute;
+  top:0;
+  left:0;
+}
+
 
