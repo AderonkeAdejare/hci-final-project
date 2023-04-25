@@ -205,7 +205,7 @@ class ResultPage {
   drawText(content, xpos, ypos, ts) {
     fill(0);
     textAlign(CENTER, CENTER);
-    textFont('Lato')
+    textFont('Verdana')
     textSize(ts);
     text(content, xpos, ypos);
   }
@@ -294,7 +294,7 @@ class SelectPage {
     fill(0);
     textAlign(CENTER, CENTER);
     textSize(ts);
-    textFont('Lato');
+    textFont('Verdana');
     text(content, xpos, ypos);
     // if (content == this.title){
     //   textStyle(BOLD);
