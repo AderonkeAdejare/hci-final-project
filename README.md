@@ -22,7 +22,7 @@ Automatically adding to the Spotify playlist (instead of manual user additions).
 Double player mode - this was part of our original design, but we (sadly) weren’t able to get to it with the time constraints on hand. If we had been able to implement it, though, we think it would add to our existing task of expressing shared interests with others (since standing next to someone while playing a game would foster conversations about music taste, etc.!)
 
 ## Constraints in the Deployment Environment:
-**Physical Constraints: ** Since we are using pelvic joint data in our project, the users need to be standing ~6 feet away from the display so that their pelvic joint is detected by the Kinect sensor.
+**Physical Constraints:** Since we are using pelvic joint data in our project, the users need to be standing ~6 feet away from the display so that their pelvic joint is detected by the Kinect sensor.
 
 Specifically with the location of TV1 in AKW, there is a cement wall on the right side of the display that can obstruct users’ range of motion. Since our implementation depends on users moving to the left, right, or middle in what feels like an “intuitive” way, we addressed this in calibrating the values of the sensor data. However, we felt that this is still worth noting as a constraint from the deployment environment (that the user hopefully doesn’t have to think much about). 
 
